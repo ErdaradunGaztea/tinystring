@@ -11,3 +11,11 @@ baz <- function(a) {
 bar <- function(a_pointer) {
   .Call(`_tinystring_bar`, a_pointer)
 }
+
+rcpp_pack <- function(x) {
+  .Call(`_tinystring_rcpp_pack`, x)
+}
+
+rcpp_unpack <- function(x) {
+  .Call(`_tinystring_rcpp_unpack`, x)
+}

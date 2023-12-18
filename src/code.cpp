@@ -1,6 +1,4 @@
 #include <cpp11/external_pointer.hpp>
-#include <vector>
-#include <string>
 
 [[cpp11::register]]
 cpp11::external_pointer<int> foo() {
