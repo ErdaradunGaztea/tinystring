@@ -20,3 +20,24 @@ cpp11::r_string rcpp_unpack(cpp11::external_pointer<std::string> x) {
   std::string x_dptr = *x;
   return x_dptr;
 }
+
+[[cpp11::register]]
+cpp11::external_pointer<std::vector<std::string>> rcpp_vpack(cpp11::strings x) {
+  std::vector<std::string> value = {};
+  for (auto s : x) {
+    value.push_back(s);
+  }
+  auto ptr = cpp11::external_pointer<std::vector<std::string>>(&value);
+  return ptr;
+}
+
+[[cpp11::register]]
+cpp11::writable::strings rcpp_vunpack(SEXP x) {
+  cpp11::external_pointer<std::vector<std::string>> x_ptr(x);
+  std::vector<std::string> value = *x_ptr;
+  cpp11::writable::strings ret = {};
+  for (auto s : value) {
+    ret.push_back(s);
+  }
+  return ret;
+}

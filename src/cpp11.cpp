@@ -40,14 +40,30 @@ extern "C" SEXP _tinystring_rcpp_unpack(SEXP x) {
     return cpp11::as_sexp(rcpp_unpack(cpp11::as_cpp<cpp11::decay_t<cpp11::external_pointer<std::string>>>(x)));
   END_CPP11
 }
+// pack.cpp
+cpp11::external_pointer<std::vector<std::string>> rcpp_vpack(cpp11::strings x);
+extern "C" SEXP _tinystring_rcpp_vpack(SEXP x) {
+  BEGIN_CPP11
+    return cpp11::as_sexp(rcpp_vpack(cpp11::as_cpp<cpp11::decay_t<cpp11::strings>>(x)));
+  END_CPP11
+}
+// pack.cpp
+cpp11::writable::strings rcpp_vunpack(SEXP x);
+extern "C" SEXP _tinystring_rcpp_vunpack(SEXP x) {
+  BEGIN_CPP11
+    return cpp11::as_sexp(rcpp_vunpack(cpp11::as_cpp<cpp11::decay_t<SEXP>>(x)));
+  END_CPP11
+}
 
 extern "C" {
 static const R_CallMethodDef CallEntries[] = {
-    {"_tinystring_bar",         (DL_FUNC) &_tinystring_bar,         1},
-    {"_tinystring_baz",         (DL_FUNC) &_tinystring_baz,         1},
-    {"_tinystring_foo",         (DL_FUNC) &_tinystring_foo,         0},
-    {"_tinystring_rcpp_pack",   (DL_FUNC) &_tinystring_rcpp_pack,   1},
-    {"_tinystring_rcpp_unpack", (DL_FUNC) &_tinystring_rcpp_unpack, 1},
+    {"_tinystring_bar",          (DL_FUNC) &_tinystring_bar,          1},
+    {"_tinystring_baz",          (DL_FUNC) &_tinystring_baz,          1},
+    {"_tinystring_foo",          (DL_FUNC) &_tinystring_foo,          0},
+    {"_tinystring_rcpp_pack",    (DL_FUNC) &_tinystring_rcpp_pack,    1},
+    {"_tinystring_rcpp_unpack",  (DL_FUNC) &_tinystring_rcpp_unpack,  1},
+    {"_tinystring_rcpp_vpack",   (DL_FUNC) &_tinystring_rcpp_vpack,   1},
+    {"_tinystring_rcpp_vunpack", (DL_FUNC) &_tinystring_rcpp_vunpack, 1},
     {NULL, NULL, 0}
 };
 }

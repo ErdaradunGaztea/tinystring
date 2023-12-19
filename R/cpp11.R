@@ -19,3 +19,11 @@ rcpp_pack <- function(x) {
 rcpp_unpack <- function(x) {
   .Call(`_tinystring_rcpp_unpack`, x)
 }
+
+rcpp_vpack <- function(x) {
+  .Call(`_tinystring_rcpp_vpack`, x)
+}
+
+rcpp_vunpack <- function(x) {
+  .Call(`_tinystring_rcpp_vunpack`, x)
+}
