@@ -12,18 +12,14 @@ bar <- function(a_pointer) {
   .Call(`_tinystring_bar`, a_pointer)
 }
 
-rcpp_pack <- function(x) {
-  .Call(`_tinystring_rcpp_pack`, x)
-}
-
-rcpp_unpack <- function(x) {
-  .Call(`_tinystring_rcpp_unpack`, x)
-}
-
 rcpp_vpack <- function(x) {
   .Call(`_tinystring_rcpp_vpack`, x)
 }
 
 rcpp_vunpack <- function(x) {
   .Call(`_tinystring_rcpp_vunpack`, x)
+}
+
+rcpp_append_a <- function(x) {
+  .Call(`_tinystring_rcpp_append_a`, x)
 }
