@@ -1,26 +1,31 @@
 #include <cpp11/external_pointer.hpp>
+#include <cpp11/integers.hpp>
+#include <cpp11/strings.hpp>
+
+#include <string>
+#include <vector>
+
+#include "alphabet.cpp"
+#include "null_pointer.cpp"
 
 [[cpp11::register]]
-cpp11::external_pointer<int> foo() {
-  auto ptr = cpp11::external_pointer<int>(new int(1));
-
-  return ptr;
+SEXP rcpp_alphabet(cpp11::strings letters) {
+  std::vector<std::string> letters_std(letters.begin(), letters.end());
+  auto alphabet = new Alphabet(letters_std);
+  cpp11::external_pointer<Alphabet> alphabet_ptr(alphabet);
+  return alphabet_ptr;
 }
 
 [[cpp11::register]]
-int baz(SEXP a) {
-  cpp11::external_pointer<int> a_pointer(a);
-
-  int b = *a_pointer;
-
-  return b;
+cpp11::integers rcpp_get_alph_size(SEXP x) {
+  cpp11::external_pointer<Alphabet> alphabet_ptr(x);
+  assert_not_null_pointer(alphabet_ptr);
+  return cpp11::as_sexp(alphabet_ptr->get_size());
 }
 
-[[cpp11::register]]
-int bar(cpp11::external_pointer<int> a_pointer) {
-  int b = *a_pointer;
-
-  return b;
+void rcpp_delete_alphabet(SEXP x) {
+  cpp11::external_pointer<Alphabet> alphabet_ptr(x);
+  delete &(*alphabet_ptr);
 }
 
 // When trying to optimize deconstructing long input strings:
