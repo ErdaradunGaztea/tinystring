@@ -9,9 +9,13 @@
 
 [[cpp11::register]]
 SEXP rcpp_pack(cpp11::strings x, cpp11::strings alphabet) {
-  std::vector<std::string> std_x(x.begin(), x.end());
-  std::vector<std::string> std_alphabet(alphabet.begin(), alphabet.end());
-  auto packed = new TinyStrings(std_x, std_alphabet);
+  std::vector<std::string> std_x(x.cbegin(), x.cend());
+  std::vector<std::string> std_alphabet(alphabet.cbegin(), alphabet.cend());
+  std::vector<char> char_alphabet;
+  std::transform(std_alphabet.cbegin(), std_alphabet.cend(), std::back_inserter(char_alphabet), [](std::string s) {
+    return s[0];
+  });
+  auto packed = new TinyStrings(std_x, char_alphabet);
   cpp11::external_pointer<TinyStrings> packed_ptr(packed);
   return packed_ptr;
 }

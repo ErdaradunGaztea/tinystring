@@ -27,19 +27,19 @@ extern "C" SEXP _tinystring_rcpp_alphabet(SEXP letters) {
   END_CPP11
 }
 // r_alphabet.cpp
-cpp11::integers rcpp_get_alph_size(SEXP x);
-extern "C" SEXP _tinystring_rcpp_get_alph_size(SEXP x) {
+cpp11::integers rcpp_get_alph_width(SEXP x);
+extern "C" SEXP _tinystring_rcpp_get_alph_width(SEXP x) {
   BEGIN_CPP11
-    return cpp11::as_sexp(rcpp_get_alph_size(cpp11::as_cpp<cpp11::decay_t<SEXP>>(x)));
+    return cpp11::as_sexp(rcpp_get_alph_width(cpp11::as_cpp<cpp11::decay_t<SEXP>>(x)));
   END_CPP11
 }
 
 extern "C" {
 static const R_CallMethodDef CallEntries[] = {
-    {"_tinystring_rcpp_alphabet",      (DL_FUNC) &_tinystring_rcpp_alphabet,      1},
-    {"_tinystring_rcpp_display",       (DL_FUNC) &_tinystring_rcpp_display,       1},
-    {"_tinystring_rcpp_get_alph_size", (DL_FUNC) &_tinystring_rcpp_get_alph_size, 1},
-    {"_tinystring_rcpp_pack",          (DL_FUNC) &_tinystring_rcpp_pack,          2},
+    {"_tinystring_rcpp_alphabet",       (DL_FUNC) &_tinystring_rcpp_alphabet,       1},
+    {"_tinystring_rcpp_display",        (DL_FUNC) &_tinystring_rcpp_display,        1},
+    {"_tinystring_rcpp_get_alph_width", (DL_FUNC) &_tinystring_rcpp_get_alph_width, 1},
+    {"_tinystring_rcpp_pack",           (DL_FUNC) &_tinystring_rcpp_pack,           2},
     {NULL, NULL, 0}
 };
 }

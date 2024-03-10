@@ -9,7 +9,7 @@ new_alphabet <- function(letters) {
 }
 
 #' @export
-alphabet_size <- function(alphabet) {
+alphabet_width <- function(alphabet) {
   stopifnot(inherits(alphabet, "tstr_alphabet"))
-  rcpp_get_alph_size(alphabet)
+  rcpp_get_alph_width(alphabet)
 }

@@ -19,10 +19,10 @@ SEXP rcpp_alphabet(cpp11::strings letters) {
 }
 
 [[cpp11::register]]
-cpp11::integers rcpp_get_alph_size(SEXP x) {
+cpp11::integers rcpp_get_alph_width(SEXP x) {
   cpp11::external_pointer<Alphabet> alphabet_ptr(x);
   assert_not_null_pointer(alphabet_ptr);
-  return cpp11::as_sexp(alphabet_ptr->get_size());
+  return cpp11::as_sexp(alphabet_ptr->get_width());
 }
 
 // When trying to optimize deconstructing long input strings:
