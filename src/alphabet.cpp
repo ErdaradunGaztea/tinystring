@@ -16,6 +16,14 @@ public:
 
   // Packing algorithm differs between simple and complex alphabets
   virtual std::vector<int> pack(const std::string& string) = 0;
+  virtual std::string unpack(const std::vector<int>& packed) = 0;
+
+  void recode_letter(T prev, T next) {
+    auto letter_at = std::find(letters_.begin(), letters_.end(), prev);
+    if (letter_at != letters_.end()) {
+      *letter_at = next;
+    }
+  }
 
 private:
   uint8_t determine_width(const std::vector<T>& letters) {

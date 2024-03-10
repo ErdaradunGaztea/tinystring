@@ -16,7 +16,19 @@ public:
 
   TinyStrings(std::vector<std::string> strings, std::vector<char> letters) : TinyStrings(strings, AlphabetSimple(letters)) {}
 
+  std::vector<std::string> unpack() {
+    std::vector<std::string> ret;
+    std::transform(data_.cbegin(), data_.cend(), std::back_inserter(ret), [this](std::vector<int> s) {
+      return alphabet_.unpack(s);
+    });
+    return ret;
+  }
+
   std::vector<std::vector<int>> get_data() {
     return data_;
+  }
+
+  AlphabetSimple& get_alphabet() {
+    return alphabet_;
   }
 };

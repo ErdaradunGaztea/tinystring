@@ -4,6 +4,7 @@
 
 #include <string>
 #include <vector>
+#include <algorithm>
 
 #include "TinyStrings.cpp"
 #include "null_pointer.cpp"

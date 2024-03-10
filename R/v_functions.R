@@ -10,7 +10,7 @@ tstr_pack <- function(x, alphabet = letters) {
 }
 
 #' @export
-tstr_display <- function(x) {
+tstr_unpack <- function(x) {
   stopifnot(inherits(x, "tstr"))
-  rcpp_display(x)
+  rcpp_unpack(x)
 }

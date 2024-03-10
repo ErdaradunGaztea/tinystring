@@ -19,11 +19,27 @@ extern "C" SEXP _tinystring_rcpp_display(SEXP x) {
     return cpp11::as_sexp(rcpp_display(cpp11::as_cpp<cpp11::decay_t<SEXP>>(x)));
   END_CPP11
 }
+// r_recode.cpp
+SEXP rcpp_recode(SEXP x, cpp11::list_of<cpp11::strings> recodes);
+extern "C" SEXP _tinystring_rcpp_recode(SEXP x, SEXP recodes) {
+  BEGIN_CPP11
+    return cpp11::as_sexp(rcpp_recode(cpp11::as_cpp<cpp11::decay_t<SEXP>>(x), cpp11::as_cpp<cpp11::decay_t<cpp11::list_of<cpp11::strings>>>(recodes)));
+  END_CPP11
+}
+// r_unpack.cpp
+cpp11::strings rcpp_unpack(SEXP x);
+extern "C" SEXP _tinystring_rcpp_unpack(SEXP x) {
+  BEGIN_CPP11
+    return cpp11::as_sexp(rcpp_unpack(cpp11::as_cpp<cpp11::decay_t<SEXP>>(x)));
+  END_CPP11
+}
 
 extern "C" {
 static const R_CallMethodDef CallEntries[] = {
     {"_tinystring_rcpp_display", (DL_FUNC) &_tinystring_rcpp_display, 1},
     {"_tinystring_rcpp_pack",    (DL_FUNC) &_tinystring_rcpp_pack,    2},
+    {"_tinystring_rcpp_recode",  (DL_FUNC) &_tinystring_rcpp_recode,  2},
+    {"_tinystring_rcpp_unpack",  (DL_FUNC) &_tinystring_rcpp_unpack,  1},
     {NULL, NULL, 0}
 };
 }
