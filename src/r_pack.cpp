@@ -6,6 +6,7 @@
 #include <vector>
 
 #include "TinyStrings.cpp"
+#include "null_pointer.cpp"
 
 [[cpp11::register]]
 SEXP rcpp_pack(cpp11::strings x, cpp11::strings alphabet) {
@@ -20,9 +21,13 @@ SEXP rcpp_pack(cpp11::strings x, cpp11::strings alphabet) {
   return packed_ptr;
 }
 
+// When trying to optimize deconstructing long input strings:
+// https://cpp11.r-lib.org/articles/FAQ.html#ok-but-i-really-want-to-call-cpp11unwind_protect-manually
+
 [[cpp11::register]]
 cpp11::list rcpp_display(SEXP x) {
   cpp11::external_pointer<TinyStrings> x_ptr(x);
+  assert_not_null_pointer(x_ptr);
   auto codes = x_ptr->get_data();
   cpp11::writable::list ret{};
   for (auto code : codes) {

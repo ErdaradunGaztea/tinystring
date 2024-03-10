@@ -3,17 +3,14 @@
 #include <vector>
 #include <algorithm>
 
-class AlphabetSimple {
-  std::vector<char> letters_;
-  uint8_t width_;
+#include "Alphabet.cpp"
 
+class AlphabetSimple : public Alphabet<char> {
 public:
-  AlphabetSimple(std::vector<char> letters) : letters_(letters) {
-    width_ = determine_width(letters);
-  }
+  AlphabetSimple(std::vector<char> letters) : Alphabet<char>(letters) {}
 
   std::vector<int> pack(const std::string& string) {
-    // TODO: actually pack
+    // TODO: pack instead of simply indexing
     std::vector<int> ret;
     std::transform(string.cbegin(), string.cend(), std::back_inserter(ret), [this](char s) {
       int index = pow(2, width_) - 1;
@@ -24,15 +21,5 @@ public:
       return index;
     });
     return ret;
-  }
-
-private:
-  uint8_t determine_width(const std::vector<char>& letters) {
-    return std::ceil(std::log2(letters.size() + 1));
-  }
-
-public:
-  uint8_t get_width() {
-    return width_;
   }
 };

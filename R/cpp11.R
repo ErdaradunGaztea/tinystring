@@ -7,11 +7,3 @@ rcpp_pack <- function(x, alphabet) {
 rcpp_display <- function(x) {
   .Call(`_tinystring_rcpp_display`, x)
 }
-
-rcpp_alphabet <- function(letters) {
-  .Call(`_tinystring_rcpp_alphabet`, letters)
-}
-
-rcpp_get_alph_width <- function(x) {
-  .Call(`_tinystring_rcpp_get_alph_width`, x)
-}

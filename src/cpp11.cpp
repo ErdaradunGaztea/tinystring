@@ -5,41 +5,25 @@
 #include "cpp11/declarations.hpp"
 #include <R_ext/Visibility.h>
 
-// pack.cpp
+// r_pack.cpp
 SEXP rcpp_pack(cpp11::strings x, cpp11::strings alphabet);
 extern "C" SEXP _tinystring_rcpp_pack(SEXP x, SEXP alphabet) {
   BEGIN_CPP11
     return cpp11::as_sexp(rcpp_pack(cpp11::as_cpp<cpp11::decay_t<cpp11::strings>>(x), cpp11::as_cpp<cpp11::decay_t<cpp11::strings>>(alphabet)));
   END_CPP11
 }
-// pack.cpp
+// r_pack.cpp
 cpp11::list rcpp_display(SEXP x);
 extern "C" SEXP _tinystring_rcpp_display(SEXP x) {
   BEGIN_CPP11
     return cpp11::as_sexp(rcpp_display(cpp11::as_cpp<cpp11::decay_t<SEXP>>(x)));
   END_CPP11
 }
-// r_alphabet.cpp
-SEXP rcpp_alphabet(cpp11::strings letters);
-extern "C" SEXP _tinystring_rcpp_alphabet(SEXP letters) {
-  BEGIN_CPP11
-    return cpp11::as_sexp(rcpp_alphabet(cpp11::as_cpp<cpp11::decay_t<cpp11::strings>>(letters)));
-  END_CPP11
-}
-// r_alphabet.cpp
-cpp11::integers rcpp_get_alph_width(SEXP x);
-extern "C" SEXP _tinystring_rcpp_get_alph_width(SEXP x) {
-  BEGIN_CPP11
-    return cpp11::as_sexp(rcpp_get_alph_width(cpp11::as_cpp<cpp11::decay_t<SEXP>>(x)));
-  END_CPP11
-}
 
 extern "C" {
 static const R_CallMethodDef CallEntries[] = {
-    {"_tinystring_rcpp_alphabet",       (DL_FUNC) &_tinystring_rcpp_alphabet,       1},
-    {"_tinystring_rcpp_display",        (DL_FUNC) &_tinystring_rcpp_display,        1},
-    {"_tinystring_rcpp_get_alph_width", (DL_FUNC) &_tinystring_rcpp_get_alph_width, 1},
-    {"_tinystring_rcpp_pack",           (DL_FUNC) &_tinystring_rcpp_pack,           2},
+    {"_tinystring_rcpp_display", (DL_FUNC) &_tinystring_rcpp_display, 1},
+    {"_tinystring_rcpp_pack",    (DL_FUNC) &_tinystring_rcpp_pack,    2},
     {NULL, NULL, 0}
 };
 }
