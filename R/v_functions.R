@@ -1,20 +1,16 @@
 #' @export
-tstr_pack <- function(x) {
+tstr_pack <- function(x, alphabet = letters) {
   stopifnot(is.character(x))
+  stopifnot(is.character(alphabet))
+
   structure(
-    rcpp_vpack(x),
+    rcpp_pack(x, alphabet),
     class = "tstr"
   )
 }
 
 #' @export
-tstr_unpack <- function(x) {
+tstr_display <- function(x) {
   stopifnot(inherits(x, "tstr"))
-  rcpp_vunpack(x)
-}
-
-#' @export
-tstr_append_a <- function(x) {
-  stopifnot(inherits(x, "tstr"))
-  rcpp_append_a(x)
+  rcpp_display(x)
 }

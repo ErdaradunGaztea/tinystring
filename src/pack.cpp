@@ -1,28 +1,28 @@
 #include <cpp11/strings.hpp>
+#include <cpp11/list.hpp>
 #include <cpp11/external_pointer.hpp>
 
 #include <string>
 #include <vector>
 
+#include "TinyStrings.cpp"
+
 [[cpp11::register]]
-SEXP rcpp_vpack(cpp11::strings x) {
-  // `new` keyword returns a pointer to the vector, which means the lifespan of this variable will exceed the lifespan
-  //  of the local scope; as a result, the pointer to `value` will remain valid after passing it to R
-  auto value = new std::vector<std::string>(x.begin(), x.end());
-  cpp11::external_pointer<std::vector<std::string>> x_ptr(value);
-  return x_ptr;
+SEXP rcpp_pack(cpp11::strings x, cpp11::strings alphabet) {
+  std::vector<std::string> std_x(x.begin(), x.end());
+  std::vector<std::string> std_alphabet(alphabet.begin(), alphabet.end());
+  auto packed = new TinyStrings(std_x, std_alphabet);
+  cpp11::external_pointer<TinyStrings> packed_ptr(packed);
+  return packed_ptr;
 }
 
 [[cpp11::register]]
-cpp11::strings rcpp_vunpack(SEXP x) {
-  cpp11::external_pointer<std::vector<std::string>> x_ptr(x);
-  return cpp11::as_sexp(*x_ptr);
-}
-
-[[cpp11::register]]
-SEXP rcpp_append_a(SEXP x) {
-  // The code below changes x in-place! Even if we didn't return x_ptr, the value X is pointing to changes.
-  cpp11::external_pointer<std::vector<std::string>> x_ptr(x);
-  x_ptr->push_back("a");
-  return x_ptr;
+cpp11::list rcpp_display(SEXP x) {
+  cpp11::external_pointer<TinyStrings> x_ptr(x);
+  auto codes = x_ptr->get_data();
+  cpp11::writable::list ret{};
+  for (auto code : codes) {
+    ret.push_back(cpp11::as_sexp(code));
+  }
+  return ret;
 }

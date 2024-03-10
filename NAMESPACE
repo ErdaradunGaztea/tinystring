@@ -2,7 +2,6 @@
 
 export(alphabet_size)
 export(new_alphabet)
-export(tstr_append_a)
+export(tstr_display)
 export(tstr_pack)
-export(tstr_unpack)
 useDynLib(tinystring, .registration = TRUE)
