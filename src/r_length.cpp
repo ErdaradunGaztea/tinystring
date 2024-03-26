@@ -1,10 +1,21 @@
 #include <cpp11/external_pointer.hpp>
+#include <cpp11/integers.hpp>
 
 #include "TinyStrings.cpp"
 #include "null_pointer.cpp"
 
 [[cpp11::register]]
-int rcpp_length(SEXP x) {
+cpp11::writable::integers rcpp_length(SEXP x) {
+  cpp11::external_pointer<TinyStrings> x_ptr(x);
+  assert_not_null_pointer(x_ptr);
+
+  auto sizes = x_ptr->sizes();
+
+  return cpp11::writable::integers(sizes.cbegin(), sizes.cend());
+}
+
+[[cpp11::register]]
+int rcpp_num_strings(SEXP x) {
   cpp11::external_pointer<TinyStrings> x_ptr(x);
   assert_not_null_pointer(x_ptr);
 
@@ -16,9 +27,7 @@ SEXP rcpp_set_length(SEXP x, int size) {
   cpp11::external_pointer<TinyStrings> x_ptr(x);
   assert_not_null_pointer(x_ptr);
 
-  printf("Size before: %llu\n", x_ptr->get_data().size());
   x_ptr->get_data().resize(size);
-  printf("Size after: %llu\n", x_ptr->get_data().size());
 
   return x_ptr;
 }

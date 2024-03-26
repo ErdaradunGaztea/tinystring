@@ -10,7 +10,7 @@
 #'
 #' @export
 length.tstr <- function(x) {
-  rcpp_length(x)
+  rcpp_num_strings(x)
 }
 
 #' @rdname length.tstr

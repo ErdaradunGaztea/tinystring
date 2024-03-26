@@ -1,3 +1,4 @@
+#include <cmath>
 #include <vector>
 #include <algorithm>
 
@@ -20,6 +21,14 @@ public:
     std::vector<std::string> ret;
     std::transform(data_.cbegin(), data_.cend(), std::back_inserter(ret), [this](std::vector<int> s) {
       return alphabet_.unpack(s);
+    });
+    return ret;
+  }
+
+  std::vector<std::vector<int>::size_type> sizes() {
+    std::vector<std::vector<int>::size_type> ret;
+    std::transform(data_.cbegin(), data_.cend(), std::back_inserter(ret), [this](std::vector<int> s) {
+      return std::ceil(s.size() * alphabet_.get_width() / 8.0);
     });
     return ret;
   }

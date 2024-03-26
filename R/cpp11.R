@@ -4,6 +4,10 @@ rcpp_length <- function(x) {
   .Call(`_tinystring_rcpp_length`, x)
 }
 
+rcpp_num_strings <- function(x) {
+  .Call(`_tinystring_rcpp_num_strings`, x)
+}
+
 rcpp_set_length <- function(x, size) {
   .Call(`_tinystring_rcpp_set_length`, x, size)
 }

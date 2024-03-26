@@ -3,6 +3,7 @@
 S3method("length<-",tstr)
 S3method(length,tstr)
 export(tstr_gather)
+export(tstr_length)
 export(tstr_pack)
 export(tstr_recode)
 export(tstr_unpack)
