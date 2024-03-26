@@ -20,3 +20,7 @@ tstr_pack(c("vaiixaix", "bix", "?", "xai")) |>
 
 tstr_pack(c("vaiixaix", "bix.", "@?", "xai")) |>
   tstr_unpack()
+
+demo_strings |>
+  tstr_flatten() |>
+  tstr_unpack()

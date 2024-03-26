@@ -17,7 +17,7 @@ SEXP rcpp_pack(cpp11::strings x, cpp11::strings alphabet) {
   std::transform(std_alphabet.cbegin(), std_alphabet.cend(), std::back_inserter(char_alphabet), [](std::string s) {
     return s[0];
   });
-  auto packed = new TinyStrings(std_x, char_alphabet);
+  TinyStrings* packed = new TinyStrings(std_x, char_alphabet);
   cpp11::external_pointer<TinyStrings> packed_ptr(packed);
   return packed_ptr;
 }

@@ -5,6 +5,13 @@
 #include "cpp11/declarations.hpp"
 #include <R_ext/Visibility.h>
 
+// r_flatten.cpp
+SEXP rcpp_flatten(SEXP x);
+extern "C" SEXP _tinystring_rcpp_flatten(SEXP x) {
+  BEGIN_CPP11
+    return cpp11::as_sexp(rcpp_flatten(cpp11::as_cpp<cpp11::decay_t<SEXP>>(x)));
+  END_CPP11
+}
 // r_length.cpp
 cpp11::writable::integers rcpp_length(SEXP x);
 extern "C" SEXP _tinystring_rcpp_length(SEXP x) {
@@ -58,6 +65,7 @@ extern "C" SEXP _tinystring_rcpp_unpack(SEXP x) {
 extern "C" {
 static const R_CallMethodDef CallEntries[] = {
     {"_tinystring_rcpp_display",     (DL_FUNC) &_tinystring_rcpp_display,     1},
+    {"_tinystring_rcpp_flatten",     (DL_FUNC) &_tinystring_rcpp_flatten,     1},
     {"_tinystring_rcpp_length",      (DL_FUNC) &_tinystring_rcpp_length,      1},
     {"_tinystring_rcpp_num_strings", (DL_FUNC) &_tinystring_rcpp_num_strings, 1},
     {"_tinystring_rcpp_pack",        (DL_FUNC) &_tinystring_rcpp_pack,        2},

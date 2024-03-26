@@ -20,3 +20,9 @@ TinyString with one element.
 \description{
 TODO
 }
+\examples{
+tstr_pack(c("rllssllsrrlr", "slllsr"), alphabet = c("s", "l", "r")) |>
+  tstr_flatten() |>
+  tstr_unpack()
+
+}

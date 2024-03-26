@@ -11,11 +11,23 @@
 #'
 #' @return TinyString with one element.
 #'
+#' @examples
+#' tstr_pack(c("rllssllsrrlr", "slllsr"), alphabet = c("s", "l", "r")) |>
+#'   tstr_flatten() |>
+#'   tstr_unpack()
+#'
 #' @export
 tstr_flatten <- function(x, collapse = character()) {
   stopifnot(inherits(x, "tstr"))
   stopifnot(is.character(collapse))
 
-  stop("`tstr_flatten()` not implemented")
-  # rcpp_flatten(x)
+  if (!identical(collapse, character())) {
+    stop("Custom `collapse` parameter not yet supported")
+  }
+
+  structure(
+    rcpp_flatten(x),
+    # rcpp_flatten(x, collapse)
+    class = "tstr"
+  )
 }
