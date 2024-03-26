@@ -16,3 +16,8 @@ A numeric vector the same length as \code{x}.
 \description{
 TODO
 }
+\examples{
+tstr_pack(c("rllssllsrrlr", "slllsr"), alphabet = c("s", "l", "r")) |>
+  tstr_length()
+
+}

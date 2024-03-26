@@ -8,6 +8,10 @@
 #'
 #' @return A numeric vector the same length as `x`.
 #'
+#' @examples
+#' tstr_pack(c("rllssllsrrlr", "slllsr"), alphabet = c("s", "l", "r")) |>
+#'   tstr_length()
+#'
 #' @export
 tstr_length <- function(x) {
   stopifnot(inherits(x, "tstr"))
