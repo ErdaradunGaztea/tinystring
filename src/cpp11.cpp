@@ -5,6 +5,20 @@
 #include "cpp11/declarations.hpp"
 #include <R_ext/Visibility.h>
 
+// r_length.cpp
+int rcpp_length(SEXP x);
+extern "C" SEXP _tinystring_rcpp_length(SEXP x) {
+  BEGIN_CPP11
+    return cpp11::as_sexp(rcpp_length(cpp11::as_cpp<cpp11::decay_t<SEXP>>(x)));
+  END_CPP11
+}
+// r_length.cpp
+SEXP rcpp_set_length(SEXP x, int size);
+extern "C" SEXP _tinystring_rcpp_set_length(SEXP x, SEXP size) {
+  BEGIN_CPP11
+    return cpp11::as_sexp(rcpp_set_length(cpp11::as_cpp<cpp11::decay_t<SEXP>>(x), cpp11::as_cpp<cpp11::decay_t<int>>(size)));
+  END_CPP11
+}
 // r_pack.cpp
 SEXP rcpp_pack(cpp11::strings x, cpp11::strings alphabet);
 extern "C" SEXP _tinystring_rcpp_pack(SEXP x, SEXP alphabet) {
@@ -36,10 +50,12 @@ extern "C" SEXP _tinystring_rcpp_unpack(SEXP x) {
 
 extern "C" {
 static const R_CallMethodDef CallEntries[] = {
-    {"_tinystring_rcpp_display", (DL_FUNC) &_tinystring_rcpp_display, 1},
-    {"_tinystring_rcpp_pack",    (DL_FUNC) &_tinystring_rcpp_pack,    2},
-    {"_tinystring_rcpp_recode",  (DL_FUNC) &_tinystring_rcpp_recode,  2},
-    {"_tinystring_rcpp_unpack",  (DL_FUNC) &_tinystring_rcpp_unpack,  1},
+    {"_tinystring_rcpp_display",    (DL_FUNC) &_tinystring_rcpp_display,    1},
+    {"_tinystring_rcpp_length",     (DL_FUNC) &_tinystring_rcpp_length,     1},
+    {"_tinystring_rcpp_pack",       (DL_FUNC) &_tinystring_rcpp_pack,       2},
+    {"_tinystring_rcpp_recode",     (DL_FUNC) &_tinystring_rcpp_recode,     2},
+    {"_tinystring_rcpp_set_length", (DL_FUNC) &_tinystring_rcpp_set_length, 2},
+    {"_tinystring_rcpp_unpack",     (DL_FUNC) &_tinystring_rcpp_unpack,     1},
     {NULL, NULL, 0}
 };
 }

@@ -16,3 +16,9 @@ Letters to recode; parameter names define target letters.}
 \description{
 TODO
 }
+\examples{
+tstr_pack(c("rllssllsrr", "slllsrssl"), alphabet = c("s", "l", "r")) |>
+  tstr_recode("u" = "s") |>
+  tstr_unpack()
+
+}

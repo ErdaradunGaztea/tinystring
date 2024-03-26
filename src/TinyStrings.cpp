@@ -24,7 +24,7 @@ public:
     return ret;
   }
 
-  std::vector<std::vector<int>> get_data() {
+  std::vector<std::vector<int>>& get_data() {
     return data_;
   }
 

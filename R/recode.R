@@ -8,6 +8,11 @@
 #' @param ... \[`character(1)`\]\cr
 #'  Letters to recode; parameter names define target letters.
 #'
+#' @examples
+#' tstr_pack(c("rllssllsrr", "slllsrssl"), alphabet = c("s", "l", "r")) |>
+#'   tstr_recode("u" = "s") |>
+#'   tstr_unpack()
+#'
 #' @export
 tstr_recode <- function(x, ...) {
   stopifnot(inherits(x, "tstr"))
