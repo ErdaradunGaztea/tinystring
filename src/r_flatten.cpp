@@ -5,7 +5,7 @@
 
 [[cpp11::register]]
 SEXP rcpp_flatten(SEXP x) {
-  cpp11::external_pointer<TinyStrings> x_ptr(x);
+  const cpp11::external_pointer<TinyStrings> x_ptr(x);
   assert_not_null_pointer(x_ptr);
 
   TinyStrings* flattened = x_ptr->flattened();

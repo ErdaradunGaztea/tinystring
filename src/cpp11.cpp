@@ -20,24 +20,24 @@ extern "C" SEXP _tinystring_rcpp_length(SEXP x) {
   END_CPP11
 }
 // r_length.cpp
-int rcpp_num_strings(SEXP x);
+unsigned long long rcpp_num_strings(SEXP x);
 extern "C" SEXP _tinystring_rcpp_num_strings(SEXP x) {
   BEGIN_CPP11
     return cpp11::as_sexp(rcpp_num_strings(cpp11::as_cpp<cpp11::decay_t<SEXP>>(x)));
   END_CPP11
 }
 // r_length.cpp
-SEXP rcpp_set_length(SEXP x, int size);
+SEXP rcpp_set_length(SEXP x, const int size);
 extern "C" SEXP _tinystring_rcpp_set_length(SEXP x, SEXP size) {
   BEGIN_CPP11
-    return cpp11::as_sexp(rcpp_set_length(cpp11::as_cpp<cpp11::decay_t<SEXP>>(x), cpp11::as_cpp<cpp11::decay_t<int>>(size)));
+    return cpp11::as_sexp(rcpp_set_length(cpp11::as_cpp<cpp11::decay_t<SEXP>>(x), cpp11::as_cpp<cpp11::decay_t<const int>>(size)));
   END_CPP11
 }
 // r_pack.cpp
-SEXP rcpp_pack(cpp11::strings x, cpp11::strings alphabet);
+SEXP rcpp_pack(cpp11::strings x, const cpp11::strings & alphabet);
 extern "C" SEXP _tinystring_rcpp_pack(SEXP x, SEXP alphabet) {
   BEGIN_CPP11
-    return cpp11::as_sexp(rcpp_pack(cpp11::as_cpp<cpp11::decay_t<cpp11::strings>>(x), cpp11::as_cpp<cpp11::decay_t<cpp11::strings>>(alphabet)));
+    return cpp11::as_sexp(rcpp_pack(cpp11::as_cpp<cpp11::decay_t<cpp11::strings>>(x), cpp11::as_cpp<cpp11::decay_t<const cpp11::strings &>>(alphabet)));
   END_CPP11
 }
 // r_pack.cpp
@@ -48,10 +48,10 @@ extern "C" SEXP _tinystring_rcpp_display(SEXP x) {
   END_CPP11
 }
 // r_recode.cpp
-SEXP rcpp_recode(SEXP x, cpp11::list_of<cpp11::strings> recodes);
+SEXP rcpp_recode(SEXP x, const cpp11::list_of<cpp11::strings>& recodes);
 extern "C" SEXP _tinystring_rcpp_recode(SEXP x, SEXP recodes) {
   BEGIN_CPP11
-    return cpp11::as_sexp(rcpp_recode(cpp11::as_cpp<cpp11::decay_t<SEXP>>(x), cpp11::as_cpp<cpp11::decay_t<cpp11::list_of<cpp11::strings>>>(recodes)));
+    return cpp11::as_sexp(rcpp_recode(cpp11::as_cpp<cpp11::decay_t<SEXP>>(x), cpp11::as_cpp<cpp11::decay_t<const cpp11::list_of<cpp11::strings>&>>(recodes)));
   END_CPP11
 }
 // r_unpack.cpp

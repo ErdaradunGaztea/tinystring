@@ -6,22 +6,22 @@
 #include "null_pointer.cpp"
 
 [[cpp11::register]]
-SEXP rcpp_recode(SEXP x, cpp11::list_of<cpp11::strings> recodes) {
+SEXP rcpp_recode(SEXP x, const cpp11::list_of<cpp11::strings>& recodes) {
   cpp11::external_pointer<TinyStrings> x_ptr(x);
   assert_not_null_pointer(x_ptr);
 
-  cpp11::strings next = recodes.names();
+  const cpp11::strings next = recodes.names();
   std::vector<char> std_next;
-  std::transform(next.cbegin(), next.cend(), std::back_inserter(std_next), [](cpp11::r_string s) {
+  std::transform(next.cbegin(), next.cend(), std::back_inserter(std_next), [](const cpp11::r_string& s) {
     return std::string(s).at(0);
   });
 
   std::vector<char> std_prev;
-  std::transform(recodes.cbegin(), recodes.cend(), std::back_inserter(std_prev), [](cpp11::strings s) {
+  std::transform(recodes.cbegin(), recodes.cend(), std::back_inserter(std_prev), [](const cpp11::strings& s) {
     return std::string(s.at(0)).at(0);
   });
 
-  for (uint16_t i = 0; i < std_prev.size(); i++) {
+  for (uint32_t i = 0; i < std_prev.size(); i++) {
     x_ptr->get_alphabet().recode_letter(std_prev.at(i), std_next.at(i));
   }
 

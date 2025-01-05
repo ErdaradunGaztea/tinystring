@@ -10,14 +10,14 @@
 #include "null_pointer.cpp"
 
 [[cpp11::register]]
-SEXP rcpp_pack(cpp11::strings x, cpp11::strings alphabet) {
-  std::vector<std::string> std_x(x.cbegin(), x.cend());
-  std::vector<std::string> std_alphabet(alphabet.cbegin(), alphabet.cend());
+SEXP rcpp_pack(cpp11::strings x, const cpp11::strings &alphabet) {
+  const std::vector<std::string> std_x(x.cbegin(), x.cend());
+  const std::vector<std::string> std_alphabet(alphabet.cbegin(), alphabet.cend());
   std::vector<char> char_alphabet;
-  std::transform(std_alphabet.cbegin(), std_alphabet.cend(), std::back_inserter(char_alphabet), [](std::string s) {
+  std::transform(std_alphabet.cbegin(), std_alphabet.cend(), std::back_inserter(char_alphabet), [](const std::string &s) {
     return s[0];
   });
-  TinyStrings* packed = new TinyStrings(std_x, char_alphabet);
+  auto* packed = new TinyStrings(std_x, char_alphabet);
   cpp11::external_pointer<TinyStrings> packed_ptr(packed);
   return packed_ptr;
 }
@@ -27,12 +27,12 @@ SEXP rcpp_pack(cpp11::strings x, cpp11::strings alphabet) {
 
 [[cpp11::register]]
 cpp11::list rcpp_display(SEXP x) {
-  cpp11::external_pointer<TinyStrings> x_ptr(x);
+  const cpp11::external_pointer<TinyStrings> x_ptr(x);
   assert_not_null_pointer(x_ptr);
   auto codes = x_ptr->get_data();
   cpp11::writable::list ret{};
-  for (auto code : codes) {
+  for (const auto& code : codes) {
     ret.push_back(cpp11::as_sexp(code));
   }
-  return ret;
+  return static_cast<cpp11::list>(ret);
 }
