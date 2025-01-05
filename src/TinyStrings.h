@@ -2,7 +2,7 @@
 #include <vector>
 #include <algorithm>
 
-#include "AlphabetSimple.cpp"
+#include "AlphabetSimple.h"
 
 class TinyStrings {
   std::vector<std::vector<int>> data_;

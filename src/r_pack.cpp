@@ -6,7 +6,7 @@
 #include <vector>
 #include <algorithm>
 
-#include "TinyStrings.cpp"
+#include "TinyStrings.h"
 #include "null_pointer.cpp"
 
 [[cpp11::register]]

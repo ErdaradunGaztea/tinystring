@@ -3,7 +3,7 @@
 #include <vector>
 #include <algorithm>
 
-#include "Alphabet.cpp"
+#include "Alphabet.h"
 
 class AlphabetSimple : public Alphabet<char> {
 public:
