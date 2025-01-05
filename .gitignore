@@ -1,3 +1,9 @@
 .Rproj.user
 
 .Rhistory
+
+.idea/
+
+cmake-build-debug/
+
+.clang-tidy
