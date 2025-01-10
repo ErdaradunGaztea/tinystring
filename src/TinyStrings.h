@@ -14,8 +14,9 @@ class TinyStrings {
 public:
   TinyStrings(const std::vector<std::string>& strings, AlphabetSimple alphabet);
   TinyStrings(const std::vector<std::string>& strings, const std::vector<char>& letters);
+  TinyStrings(const TinyStrings& other) = default;
 
-  std::vector<std::string> unpack();
+  [[nodiscard]] std::vector<std::string> unpack() const;
   [[nodiscard]] TinyStrings* flattened() const;
   [[nodiscard]] std::vector<std::vector<int>::size_type> sizes() const;
 
@@ -36,7 +37,7 @@ inline TinyStrings::TinyStrings(const std::vector<std::string>& strings, Alphabe
 
 inline TinyStrings::TinyStrings(const std::vector<std::string>& strings, const std::vector<char>& letters) : TinyStrings(strings, AlphabetSimple(letters)) {}
 
-inline std::vector<std::string> TinyStrings::unpack() {
+inline std::vector<std::string> TinyStrings::unpack() const {
   std::vector<std::string> ret;
   std::transform(data_.cbegin(), data_.cend(), std::back_inserter(ret), [this](const std::vector<int>& s) {
     return alphabet_.unpack(s);

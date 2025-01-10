@@ -2,6 +2,8 @@
 
 S3method("length<-",tstr)
 S3method(length,tstr)
+S3method(tstr_recode,tstr)
+S3method(tstr_recode,tstr_modifiable)
 export(tstr_c)
 export(tstr_flatten)
 export(tstr_gather)

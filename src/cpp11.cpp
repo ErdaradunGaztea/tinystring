@@ -54,6 +54,13 @@ extern "C" SEXP _tinystring_rcpp_recode(SEXP x, SEXP recodes) {
     return cpp11::as_sexp(rcpp_recode(cpp11::as_cpp<cpp11::decay_t<SEXP>>(x), cpp11::as_cpp<cpp11::decay_t<const cpp11::list_of<cpp11::strings>&>>(recodes)));
   END_CPP11
 }
+// r_recode.cpp
+SEXP rcpp_ip_recode(SEXP x, const cpp11::list_of<cpp11::strings>& recodes);
+extern "C" SEXP _tinystring_rcpp_ip_recode(SEXP x, SEXP recodes) {
+  BEGIN_CPP11
+    return cpp11::as_sexp(rcpp_ip_recode(cpp11::as_cpp<cpp11::decay_t<SEXP>>(x), cpp11::as_cpp<cpp11::decay_t<const cpp11::list_of<cpp11::strings>&>>(recodes)));
+  END_CPP11
+}
 // r_unpack.cpp
 cpp11::strings rcpp_unpack(SEXP x);
 extern "C" SEXP _tinystring_rcpp_unpack(SEXP x) {
@@ -66,6 +73,7 @@ extern "C" {
 static const R_CallMethodDef CallEntries[] = {
     {"_tinystring_rcpp_display",     (DL_FUNC) &_tinystring_rcpp_display,     1},
     {"_tinystring_rcpp_flatten",     (DL_FUNC) &_tinystring_rcpp_flatten,     1},
+    {"_tinystring_rcpp_ip_recode",   (DL_FUNC) &_tinystring_rcpp_ip_recode,   2},
     {"_tinystring_rcpp_length",      (DL_FUNC) &_tinystring_rcpp_length,      1},
     {"_tinystring_rcpp_num_strings", (DL_FUNC) &_tinystring_rcpp_num_strings, 1},
     {"_tinystring_rcpp_pack",        (DL_FUNC) &_tinystring_rcpp_pack,        2},

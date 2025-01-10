@@ -2,9 +2,15 @@
 % Please edit documentation in R/recode.R
 \name{tstr_recode}
 \alias{tstr_recode}
+\alias{tstr_recode.tstr}
+\alias{tstr_recode.tstr_modifiable}
 \title{Recode letters}
 \usage{
 tstr_recode(x, ...)
+
+\method{tstr_recode}{tstr}(x, ...)
+
+\method{tstr_recode}{tstr_modifiable}(x, ...)
 }
 \arguments{
 \item{x}{[\code{tstr()}]\cr

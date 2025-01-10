@@ -11,14 +11,14 @@ class AlphabetSimple final : public Alphabet<char> {
 public:
   explicit AlphabetSimple(const std::vector<char> &letters);
 
-  std::vector<int> pack(const std::string& string) override;
-  std::string unpack(const std::vector<int>& packed) override;
+  [[nodiscard]] std::vector<int> pack(const std::string& string) const override;
+  [[nodiscard]] std::string unpack(const std::vector<int>& packed) const override;
 };
 
 
 inline AlphabetSimple::AlphabetSimple(const std::vector<char> &letters) : Alphabet<char>(letters) {};
 
-inline std::vector<int> AlphabetSimple::pack(const std::string& string) {
+inline std::vector<int> AlphabetSimple::pack(const std::string& string) const {
   // TODO: pack instead of simply indexing
   std::vector<int> ret;
   int max_index = static_cast<int>(pow(2, width_)) - 1;
@@ -29,7 +29,7 @@ inline std::vector<int> AlphabetSimple::pack(const std::string& string) {
   return ret;
 }
 
-inline std::string AlphabetSimple::unpack(const std::vector<int>& packed) {
+inline std::string AlphabetSimple::unpack(const std::vector<int>& packed) const {
   std::vector<char> unpacked;
   int max_index = static_cast<int>(pow(2, width_)) - 1;
   std::transform(packed.cbegin(), packed.cend(), std::back_inserter(unpacked), [this, max_index](const int index) {

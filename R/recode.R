@@ -15,7 +15,6 @@
 #'
 #' @export
 tstr_recode <- function(x, ...) {
-  stopifnot(inherits(x, "tstr"))
   dots <- list(...)
   stopifnot(
     # All dots are strings
@@ -27,5 +26,24 @@ tstr_recode <- function(x, ...) {
     all(names(dots) != "")
   )
 
-  rcpp_recode(x, dots)
+  UseMethod("tstr_recode")
+}
+
+#' @rdname tstr_recode
+#' @export
+tstr_recode.tstr <- function(x, ...) {
+  dots <- list(...)
+
+  structure(
+    rcpp_recode(x, dots),
+    class = "tstr"
+  )
+}
+
+#' @rdname tstr_recode
+#' @export
+tstr_recode.tstr_modifiable <- function(x, ...) {
+  dots <- list(...)
+
+  rcpp_ip_recode(x, dots)
 }

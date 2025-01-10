@@ -9,6 +9,7 @@ SEXP rcpp_flatten(SEXP x) {
   assert_not_null_pointer(x_ptr);
 
   TinyStrings* flattened = x_ptr->flattened();
+  // ReSharper disable once CppTemplateArgumentsCanBeDeduced
   cpp11::external_pointer<TinyStrings> flattened_ptr(flattened);
 
   return flattened_ptr;
