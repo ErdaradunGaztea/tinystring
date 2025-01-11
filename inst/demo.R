@@ -1,4 +1,4 @@
-demo_strings <- tstr_pack(c("aix", "bix", "xai"))
+demo_strings <- tstr_pack(c("aixpabsj", "bixxyi", "xai"))
 
 demo_strings |>
   tstr_recode("c" = "a", "v" = "x") |>
@@ -28,5 +28,10 @@ c("vaiixaix", "bix", "?", "xai") |>
   tstr_unpack()
 
 demo_strings |>
+  tstr_flatten() |>
+  tstr_unpack()
+
+c("", "aixpabsas", "aixpa") |>
+  tstr_pack() |>
   tstr_flatten() |>
   tstr_unpack()

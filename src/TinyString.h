@@ -97,24 +97,45 @@ inline std::vector<std::byte> TinyString::shifted(const size_t offset) const {
         return std::vector<std::byte>();
     }
 
-    const size_t out_size = ceil((alphabet_->get_width() * size_ + offset) / 8.0);
+    const size_t out_size = static_cast<size_t>(
+        ceil(static_cast<double>(alphabet_->get_width() * size_ + offset) / 8.0));
     std::vector<std::byte> out(out_size);
 
-    out[0] = data_[0] << offset;
-    for (size_t i = 1; i < size_; i++) {
-        out[i] = (data_[i - 1] >> (BYTE_WIDTH - offset)) | (data_[i] << offset);
+    out.at(0) = data_.at(0) << offset;
+    for (size_t i = 1; i < data_.size(); i++) {
+        out.at(i) = (data_.at(i - 1) >> (BYTE_WIDTH - offset)) | (data_.at(i) << offset);
     }
-    if (out_size > size_) {
-        out[size_] = data_[size_] >> (BYTE_WIDTH - offset);
+    if (out_size > data_.size()) {
+        out.at(data_.size()) = data_.at(data_.size() - 1) >> (BYTE_WIDTH - offset);
     }
 
     return out;
 }
 
 inline void TinyString::append(const TinyString &other) {
+    if (other.size_ == 0) {
+        return;
+    }
+
+    if (size_ == 0) {
+        data_ = other.data_;
+        size_ = other.size_;
+        return;
+    }
+
+    uint8_t offset = (alphabet_->get_width() * size_) % 8;
+    // If we do that then we don't have to handle special case of offset == 0 later
+    offset = offset == 0 ? 8 : offset;
+
+    auto data_shifted = other.shifted(offset);
+
+    const auto it_shifted = data_shifted.cbegin();
+    data_.at(data_.size() - 1) |= *it_shifted;
+    data_shifted.erase(it_shifted);
+
+    data_.insert(data_.end(), data_shifted.cbegin(), data_shifted.cend());
     size_ += other.size_;
-    data_.insert(data_.end(), other.data_.begin(), other.data_.end());
-};
+}
 
 // Iterator -----------------------------------------------------------------------------------------------------------
 template<bool CONST>
@@ -123,7 +144,7 @@ TinyString::Iterator<CONST>::Iterator(const std::vector<std::byte> &data, const 
 
 template<bool CONST>
 typename TinyString::Iterator<CONST>::reference TinyString::Iterator<CONST>::operator*() {
-    return data_[position_];
+    return data_.at(position_);
 }
 
 template<bool CONST>
