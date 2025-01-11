@@ -21,9 +21,9 @@ SEXP rcpp_recode(SEXP x, const cpp11::list_of<cpp11::strings>& recodes) {
     return std::string(s.at(0)).at(0);
   });
 
-  TinyStrings recoded(*x_ptr);
+  const auto recoded = new TinyStrings(*x_ptr);
   // ReSharper disable once CppTemplateArgumentsCanBeDeduced
-  cpp11::external_pointer<TinyStrings> recoded_ptr(&recoded);
+  cpp11::external_pointer<TinyStrings> recoded_ptr(recoded);
 
   for (uint32_t i = 0; i < std_prev.size(); i++) {
     recoded_ptr->get_alphabet().recode_letter(std_prev.at(i), std_next.at(i));
