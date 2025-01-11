@@ -1,7 +1,7 @@
 Package: tinystring
 Type: Package
 Title: Optimized Storage of Strings with Limited Character Sets
-Version: 0.0.0.9001
+Version: 0.0.0.9002
 Authors@R: c(person("Laura", "Bakala",
              email = "erdaradun.gaztea@gmail.com",
              role = c("cre", "aut", "cph"),
