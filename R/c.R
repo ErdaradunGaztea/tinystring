@@ -24,5 +24,8 @@ tstr_c <- function(..., sep = character()) {
   stopifnot(is.character(sep))
 
   stop("`tstr_c()` not implemented")
-  # rcpp_c(dots, sep)
+  # structure(
+  #   rcpp_c(dots, sep),
+  #   class = "tstr"
+  # )
 }
