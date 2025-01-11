@@ -1,11 +1,12 @@
 #pragma once
+
 #include <vector>
 
 #include "AlphabetSimple.h"
 
 
 class TinyString {
-    std::vector<int> data_{};
+    std::vector<std::byte> data_{};
     size_t size_{};
     const AlphabetSimple *alphabet_ = nullptr;
 
@@ -15,17 +16,17 @@ public:
     public:
         using iterator_category = std::input_iterator_tag;
         using difference_type = std::ptrdiff_t;
-        using value_type = int;
-        using pointer = std::conditional_t<CONST, const int*, int*>;
-        using reference = std::conditional_t<CONST, const int&, int&>;
-        using data_type = std::conditional_t<CONST, const std::vector<int>, std::vector<int>>;
+        using value_type = std::byte;
+        using pointer = std::conditional_t<CONST, const std::byte*, std::byte*>;
+        using reference = std::conditional_t<CONST, const std::byte&, std::byte&>;
+        using data_type = std::conditional_t<CONST, const std::vector<std::byte>, std::vector<std::byte>>;
 
     protected:
         data_type data_;
         size_t position_;
 
     public:
-        explicit Iterator(const std::vector<int>& data, size_t position);
+        explicit Iterator(const std::vector<std::byte>& data, size_t position);
 
         reference operator*();
         Iterator& operator++();
@@ -65,7 +66,7 @@ inline TinyString::TinyString(const std::string &text, const AlphabetSimple &alp
 }
 
 inline std::string TinyString::unpack() const {
-    return alphabet_->unpack(data_);
+    return alphabet_->unpack(data_, size_);
 }
 
 inline size_t TinyString::size() const {
@@ -95,7 +96,7 @@ inline void TinyString::append(const TinyString &other) {
 
 // Iterator -----------------------------------------------------------------------------------------------------------
 template<bool CONST>
-TinyString::Iterator<CONST>::Iterator(const std::vector<int> &data, const size_t position) : data_(data), position_(position) {
+TinyString::Iterator<CONST>::Iterator(const std::vector<std::byte> &data, const size_t position) : data_(data), position_(position) {
 }
 
 template<bool CONST>

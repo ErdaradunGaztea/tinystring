@@ -25,9 +25,10 @@ tstr_flatten <- function(x, collapse = character()) {
     stop("Custom `collapse` parameter not yet supported")
   }
 
-  structure(
-    rcpp_flatten(x),
-    # rcpp_flatten(x, collapse)
-    class = "tstr"
-  )
+  stop("`tstr_flatten()` not implemented")
+  # structure(
+  #   rcpp_flatten(x),
+  #   # rcpp_flatten(x, collapse)
+  #   class = "tstr"
+  # )
 }
