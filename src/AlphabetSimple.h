@@ -87,6 +87,7 @@ inline char AlphabetSimple::match_letter(const std::byte index) const {
 
 template<uint8_t WIDTH>
 std::vector<std::byte> AlphabetSimple::pack(const std::string& text) const {
+    constexpr uint8_t BYTE_WIDTH = 8u;
     const std::vector<std::byte>::size_type out_size = ceil(static_cast<double>(text.size()) * WIDTH / 8.0);
     std::vector<std::byte> out(out_size);
 
@@ -97,13 +98,13 @@ std::vector<std::byte> AlphabetSimple::pack(const std::string& text) const {
         const auto packed_letter = match_index(letter);
         out[out_byte] |= packed_letter << shift;
         // If shift + length exceeds 1 byte width, we need to fit the rest of the packed letter in the next byte
-        if (shift + WIDTH > 8u) {
-            out[out_byte + 1] |= (packed_letter >> (8u - shift));
+        if (shift + WIDTH > BYTE_WIDTH) {
+            out[out_byte + 1] |= (packed_letter >> (BYTE_WIDTH - shift));
         }
 
         shift += WIDTH;
-        if (shift >= 8u) {
-            shift -= 8u;
+        if (shift >= BYTE_WIDTH) {
+            shift -= BYTE_WIDTH;
             out_byte++;
         }
     }
@@ -113,24 +114,25 @@ std::vector<std::byte> AlphabetSimple::pack(const std::string& text) const {
 
 template<uint8_t WIDTH>
 std::string AlphabetSimple::unpack(const std::vector<std::byte> &packed, const size_t size) const {
+    constexpr uint8_t BYTE_WIDTH = 8u;
     std::string out;
     out.reserve(size);
 
     std::vector<std::byte>::size_type out_byte = 0;
-    uint8_t shift = 8u - WIDTH;
+    uint8_t shift = BYTE_WIDTH - WIDTH;
 
     // The solution here is in many ways the reverse of pack()
     for (size_t i = 0; i < size; i++) {
-        std::byte index = packed[out_byte] << shift >> 8u - WIDTH;
+        std::byte index = packed[out_byte] << shift >> BYTE_WIDTH - WIDTH;
         // Since we optionally included the next byte in pack(), here we include the previous byte instead
-        if (shift > 8u - WIDTH) {
-            index |= packed[out_byte - 1] >> 16u - WIDTH - shift;
+        if (shift > BYTE_WIDTH - WIDTH) {
+            index |= packed[out_byte - 1] >> 2 * BYTE_WIDTH - WIDTH - shift;
         }
         out += match_letter(index);
 
         // Previously we were adding to shift modulo 8, now we're subtracting
         if (shift < WIDTH) {
-            shift += 8u;
+            shift += BYTE_WIDTH;
             out_byte++;
         }
         shift -= WIDTH;
