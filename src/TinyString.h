@@ -48,6 +48,7 @@ public:
     [[nodiscard]] iterator end() const;
     [[nodiscard]] const_iterator cbegin() const;
     [[nodiscard]] const_iterator cend() const;
+    std::vector<std::byte> shifted(size_t offset) const;
     void append(const TinyString &other);
 };
 
@@ -87,6 +88,27 @@ inline TinyString::const_iterator TinyString::cbegin() const {
 
 inline TinyString::const_iterator TinyString::cend() const {
     return const_iterator(data_, size_);
+}
+
+inline std::vector<std::byte> TinyString::shifted(const size_t offset) const {
+    constexpr uint8_t BYTE_WIDTH = 8u;
+
+    if (size_ == 0) {
+        return std::vector<std::byte>();
+    }
+
+    const size_t out_size = ceil((alphabet_->get_width() * size_ + offset) / 8.0);
+    std::vector<std::byte> out(out_size);
+
+    out[0] = data_[0] << offset;
+    for (size_t i = 1; i < size_; i++) {
+        out[i] = (data_[i - 1] >> (BYTE_WIDTH - offset)) | (data_[i] << offset);
+    }
+    if (out_size > size_) {
+        out[size_] = data_[size_] >> (BYTE_WIDTH - offset);
+    }
+
+    return out;
 }
 
 inline void TinyString::append(const TinyString &other) {
