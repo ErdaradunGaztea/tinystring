@@ -31,7 +31,6 @@ demo_strings |>
   tstr_flatten() |>
   tstr_unpack()
 
-c("", "aixpabsas", "aixpa") |>
-  tstr_pack() |>
-  tstr_flatten() |>
-  tstr_unpack()
+tstr_c(
+  demo_strings, tstr_pack(c("aix"))
+)

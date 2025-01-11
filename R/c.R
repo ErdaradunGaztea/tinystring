@@ -17,6 +17,7 @@ tstr_c <- function(..., sep = character()) {
   dot_lengths <- lengths(dots)
   stopifnot(
     # All dots are TinyStrings
+    # TODO: Should this function allow passing characters that would be then coerced to TinyStrings?
     all(vapply(dots, function(x) { inherits(x, "tstr") }, logical(1))),
     all(dot_lengths %in% c(1, max(dot_lengths)))
   )
