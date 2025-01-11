@@ -55,7 +55,7 @@ inline std::vector<std::string> TinyStrings::unpack() const {
     return ret;
 }
 
-inline TinyStrings *TinyStrings::flattened() const {
+inline TinyStrings* TinyStrings::flattened() const {
     std::size_t total_size = 0;
     for (const auto &s: data_) {
         total_size += s.size();
@@ -67,7 +67,7 @@ inline TinyStrings *TinyStrings::flattened() const {
         flat_data.append(s);
     }
 
-    const auto flattened = new TinyStrings(flat_data, alphabet_);
+    auto *flattened = new TinyStrings(flat_data, alphabet_);
     return flattened;
 }
 
