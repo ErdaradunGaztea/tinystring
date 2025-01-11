@@ -20,10 +20,6 @@ rcpp_pack <- function(x, alphabet) {
   .Call(`_tinystring_rcpp_pack`, x, alphabet)
 }
 
-rcpp_display <- function(x) {
-  .Call(`_tinystring_rcpp_display`, x)
-}
-
 rcpp_recode <- function(x, recodes) {
   .Call(`_tinystring_rcpp_recode`, x, recodes)
 }

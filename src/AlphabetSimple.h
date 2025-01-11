@@ -12,11 +12,11 @@ public:
     explicit AlphabetSimple(const std::vector<char> &letters);
 
     [[nodiscard]] std::vector<int> pack(const std::string &string) const override;
-
     [[nodiscard]] std::string unpack(const std::vector<int> &packed) const override;
 };
 
 
+// ReSharper disable once CppRedundantTemplateArguments
 inline AlphabetSimple::AlphabetSimple(const std::vector<char> &letters) : Alphabet<char>(letters) {
 };
 

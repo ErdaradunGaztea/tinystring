@@ -9,7 +9,7 @@ cpp11::writable::integers rcpp_length(SEXP x) {
     const cpp11::external_pointer<TinyStrings> x_ptr(x);
     assert_not_null_pointer(x_ptr);
 
-    auto sizes = x_ptr->sizes();
+    const auto sizes = x_ptr->sizes();
 
     return {sizes.cbegin(), sizes.cend()};
 }
@@ -27,7 +27,7 @@ SEXP rcpp_set_length(SEXP x, const int size) {
     cpp11::external_pointer<TinyStrings> x_ptr(x);
     assert_not_null_pointer(x_ptr);
 
-    x_ptr->get_data().resize(size);
+    x_ptr->get_data().resize(size, TinyString(x_ptr->get_alphabet()));
 
     return x_ptr;
 }

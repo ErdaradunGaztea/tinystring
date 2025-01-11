@@ -13,16 +13,12 @@ protected:
 
 public:
     virtual ~Alphabet() = default;
-
     explicit Alphabet(std::vector<T> letters);
 
     // Packing algorithm differs between simple and complex alphabets
     [[nodiscard]] virtual std::vector<int> pack(const std::string &string) const = 0;
-
     [[nodiscard]] virtual std::string unpack(const std::vector<int> &packed) const = 0;
-
     void recode_letter(T prev, T next);
-
     [[nodiscard]] uint8_t get_width() const;
 
 private:

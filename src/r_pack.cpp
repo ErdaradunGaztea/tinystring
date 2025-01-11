@@ -7,7 +7,6 @@
 #include <algorithm>
 
 #include "TinyStrings.h"
-#include "null_pointer.cpp"
 
 [[cpp11::register]]
 SEXP rcpp_pack(const cpp11::strings &x, const cpp11::strings &alphabet) {
@@ -22,19 +21,4 @@ SEXP rcpp_pack(const cpp11::strings &x, const cpp11::strings &alphabet) {
     // ReSharper disable once CppTemplateArgumentsCanBeDeduced
     cpp11::external_pointer<TinyStrings> packed_ptr(packed);
     return packed_ptr;
-}
-
-// When trying to optimize deconstructing long input strings:
-// https://cpp11.r-lib.org/articles/FAQ.html#ok-but-i-really-want-to-call-cpp11unwind_protect-manually
-
-[[cpp11::register]]
-cpp11::list rcpp_display(SEXP x) {
-    const cpp11::external_pointer<TinyStrings> x_ptr(x);
-    assert_not_null_pointer(x_ptr);
-    auto codes = x_ptr->get_data();
-    cpp11::writable::list ret{};
-    for (const auto &code: codes) {
-        ret.push_back(cpp11::as_sexp(code));
-    }
-    return static_cast<cpp11::list>(ret);
 }
