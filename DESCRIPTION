@@ -1,12 +1,12 @@
 Package: tinystring
 Type: Package
-Title: What the Package Does (One Line, Title Case)
-Version: 0.0.0.9000
+Title: Optimized Storage of Strings with Limited Character Sets
+Version: 0.0.0.9001
 Authors@R: c(person("Laura", "Bakala",
              email = "erdaradun.gaztea@gmail.com",
              role = c("cre", "aut", "cph"),
              comment = c(ORCID = "0000-0002-3213-2484")))
-Description: What the package does (one paragraph).
+Description: Allows the user to efficiently store and process strings with limited character sets, reducing memory per character to sub-byte values.
 License: GPL (>= 3)
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
@@ -15,4 +15,4 @@ Suggests:
     decor
 LinkingTo: 
     cpp11
-SystemRequirements: C++11
+SystemRequirements: C++17

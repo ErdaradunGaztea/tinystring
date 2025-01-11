@@ -4,9 +4,9 @@
 \name{tinystring-package}
 \alias{tinystring}
 \alias{tinystring-package}
-\title{tinystring: What the Package Does (One Line, Title Case)}
+\title{tinystring: Optimized Storage of Strings with Limited Character Sets}
 \description{
-What the package does (one paragraph).
+Allows the user to efficiently store and process strings with limited character sets, reducing memory per character to sub-byte values.
 }
 \author{
 \strong{Maintainer}: Laura Bakala \email{erdaradun.gaztea@gmail.com} (\href{https://orcid.org/0000-0002-3213-2484}{ORCID}) [copyright holder]
