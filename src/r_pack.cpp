@@ -10,7 +10,7 @@
 #include "null_pointer.cpp"
 
 [[cpp11::register]]
-SEXP rcpp_pack(cpp11::strings x, const cpp11::strings &alphabet) {
+SEXP rcpp_pack(const cpp11::strings& x, const cpp11::strings &alphabet) {
   const std::vector<std::string> std_x(x.cbegin(), x.cend());
   const std::vector<std::string> std_alphabet(alphabet.cbegin(), alphabet.cend());
   std::vector<char> char_alphabet;
@@ -18,6 +18,7 @@ SEXP rcpp_pack(cpp11::strings x, const cpp11::strings &alphabet) {
     return s[0];
   });
   auto* packed = new TinyStrings(std_x, char_alphabet);
+  // ReSharper disable once CppTemplateArgumentsCanBeDeduced
   cpp11::external_pointer<TinyStrings> packed_ptr(packed);
   return packed_ptr;
 }

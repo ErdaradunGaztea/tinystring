@@ -3,7 +3,6 @@
 
 #include <string>
 #include <vector>
-#include <algorithm>
 
 #include "TinyStrings.h"
 #include "null_pointer.cpp"

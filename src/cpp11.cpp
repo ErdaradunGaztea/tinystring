@@ -34,10 +34,10 @@ extern "C" SEXP _tinystring_rcpp_set_length(SEXP x, SEXP size) {
   END_CPP11
 }
 // r_pack.cpp
-SEXP rcpp_pack(cpp11::strings x, const cpp11::strings & alphabet);
+SEXP rcpp_pack(const cpp11::strings& x, const cpp11::strings & alphabet);
 extern "C" SEXP _tinystring_rcpp_pack(SEXP x, SEXP alphabet) {
   BEGIN_CPP11
-    return cpp11::as_sexp(rcpp_pack(cpp11::as_cpp<cpp11::decay_t<cpp11::strings>>(x), cpp11::as_cpp<cpp11::decay_t<const cpp11::strings &>>(alphabet)));
+    return cpp11::as_sexp(rcpp_pack(cpp11::as_cpp<cpp11::decay_t<const cpp11::strings&>>(x), cpp11::as_cpp<cpp11::decay_t<const cpp11::strings &>>(alphabet)));
   END_CPP11
 }
 // r_pack.cpp
