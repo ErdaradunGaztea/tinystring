@@ -5,6 +5,10 @@ test_that("works for 1 string", {
 
   expect_length(output, 1)
   expect_equal(
+    tstr_length(output),
+    sum(tstr_length(input))
+  )
+  expect_equal(
     tstr_unpack(output),
     tstr_unpack(input)
   )
@@ -16,6 +20,10 @@ test_that("works for multiple strings", {
 
   expect_length(output, 1)
   expect_equal(
+    tstr_length(output),
+    sum(tstr_length(input))
+  )
+  expect_equal(
     tstr_unpack(output),
     "pamjjssbpsuy"
   )
@@ -26,7 +34,14 @@ test_that("works for 0 strings", {
   output <- tstr_flatten(input)
 
   expect_length(output, 1)
-  expect_equal(tstr_unpack(output), "")
+  expect_equal(
+    tstr_length(output),
+    sum(tstr_length(input))
+  )
+  expect_equal(
+    tstr_unpack(output),
+    ""
+  )
 })
 
 ## Empty values -------------------------------------------------------------------------------------------------------
@@ -35,6 +50,10 @@ test_that("ignores empty strings in the middle", {
   output <- tstr_flatten(input)
 
   expect_length(output, 1)
+  expect_equal(
+    tstr_length(output),
+    sum(tstr_length(input))
+  )
   expect_equal(
     tstr_unpack(output),
     "pamjjssbpsuy"
@@ -47,6 +66,10 @@ test_that("ignores empty strings at the beginning", {
 
   expect_length(output, 1)
   expect_equal(
+    tstr_length(output),
+    sum(tstr_length(input))
+  )
+  expect_equal(
     tstr_unpack(output),
     "pamjjssuy"
   )
@@ -57,6 +80,10 @@ test_that("ignores empty strings at the end", {
   output <- tstr_flatten(input)
 
   expect_length(output, 1)
+  expect_equal(
+    tstr_length(output),
+    sum(tstr_length(input))
+  )
   expect_equal(
     tstr_unpack(output),
     "pamjjssuy"

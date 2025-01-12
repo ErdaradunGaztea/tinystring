@@ -15,6 +15,7 @@ Depends:
     R (>= 4.0.0)
 Suggests: 
     decor,
+    stringr,
     testthat (>= 3.0.0)
 LinkingTo: 
     cpp11

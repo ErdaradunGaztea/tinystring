@@ -15,6 +15,7 @@
 #'
 #' @export
 tstr_recode <- function(x, ...) {
+  # TODO: Consider importing {rlang} for list2() with extra features
   dots <- list(...)
   stopifnot(
     # All dots are strings
