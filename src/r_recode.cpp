@@ -22,7 +22,6 @@ SEXP rcpp_recode(SEXP x, const cpp11::list_of<cpp11::strings> &recodes) {
     });
 
     const auto recoded = new TinyStrings(*x_ptr);
-    // ReSharper disable once CppTemplateArgumentsCanBeDeduced
     cpp11::external_pointer<TinyStrings> recoded_ptr(recoded);
 
     for (uint32_t i = 0; i < std_prev.size(); i++) {

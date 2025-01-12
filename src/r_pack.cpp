@@ -18,7 +18,6 @@ SEXP rcpp_pack(const cpp11::strings &x, const cpp11::strings &alphabet) {
                        return s[0];
                    });
     auto *packed = new TinyStrings(std_x, char_alphabet);
-    // ReSharper disable once CppTemplateArgumentsCanBeDeduced
     cpp11::external_pointer<TinyStrings> packed_ptr(packed);
     return packed_ptr;
 }
