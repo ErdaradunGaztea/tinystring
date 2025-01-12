@@ -22,7 +22,7 @@ private:
     template<uint8_t WIDTH>
     [[nodiscard]] std::vector<std::byte> pack(const std::string &text) const;
     template<uint8_t WIDTH>
-    std::string unpack(const std::vector<std::byte> &packed, size_t size) const;
+    [[nodiscard]] std::string unpack(const std::vector<std::byte> &packed, size_t size) const;
 };
 
 

@@ -17,7 +17,7 @@ public:
 
     [[nodiscard]] std::string unpack() const;
     [[nodiscard]] size_t size() const;
-    std::vector<std::byte> shifted(size_t offset) const;
+    [[nodiscard]] std::vector<std::byte> shifted(size_t offset) const;
     void append(const TinyString &other);
 };
 
@@ -47,10 +47,10 @@ inline std::vector<std::byte> TinyString::shifted(const size_t offset) const {
     constexpr uint8_t BYTE_WIDTH = 8u;
 
     if (size_ == 0) {
-        return std::vector<std::byte>();
+        return {};
     }
 
-    const size_t out_size = static_cast<size_t>(
+    const auto out_size = static_cast<size_t>(
         ceil(static_cast<double>(alphabet_->get_width() * size_ + offset) / 8.0));
     std::vector<std::byte> out(out_size);
 
