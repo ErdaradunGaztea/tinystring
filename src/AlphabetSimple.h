@@ -53,7 +53,7 @@ inline std::vector<std::byte> AlphabetSimple::pack(const std::string &text) cons
     }
 }
 
-inline std::string AlphabetSimple::unpack(const std::vector<std::byte> &packed, size_t size) const {
+inline std::string AlphabetSimple::unpack(const std::vector<std::byte> &packed, const size_t size) const {
     switch (get_width()) {
         case 2:
             return unpack<2>(packed, size);
