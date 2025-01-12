@@ -28,6 +28,10 @@ rcpp_ip_recode <- function(x, recodes) {
   .Call(`_tinystring_rcpp_ip_recode`, x, recodes)
 }
 
+rcpp_sub <- function(x, start, end) {
+  .Call(`_tinystring_rcpp_sub`, x, start, end)
+}
+
 rcpp_unpack <- function(x) {
   .Call(`_tinystring_rcpp_unpack`, x)
 }

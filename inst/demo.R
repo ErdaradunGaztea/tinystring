@@ -34,3 +34,16 @@ demo_strings |>
 tstr_c(
   demo_strings, tstr_pack(c("aix"))
 )
+
+demo_strings |>
+  tstr_sub(start = 1, end = 4) |>
+  tstr_unpack()
+
+c("vaiixaix", "bixvvx") |>
+  tstr_pack(alphabet = c("i", "v", "x")) |>
+  tstr_unpack()
+
+c("vaiixaix", "bixvvx") |>
+  tstr_pack(alphabet = c("i", "v", "x")) |>
+  tstr_sub(start = 3, end = 5) |>
+  tstr_unpack()

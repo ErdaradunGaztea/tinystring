@@ -18,4 +18,5 @@ add_library(tinystring STATIC
         src/r_recode.cpp
         src/r_flatten.cpp
         src/TinyString.h
+        src/r_sub.cpp
 )
