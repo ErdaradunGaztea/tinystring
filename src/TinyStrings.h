@@ -73,8 +73,9 @@ inline TinyStrings* TinyStrings::flattened() const {
 
 inline std::vector<size_t> TinyStrings::sizes() const {
     std::vector<size_t> ret;
-    std::transform(data_.cbegin(), data_.cend(), std::back_inserter(ret), [this](const TinyString &s) {
-        return std::ceil(static_cast<double>(s.size()) * alphabet_.get_width() / 8.0);
+    // Extracting .size() would be easier in C++20, where we'd have access to std::ranges
+    std::transform(data_.cbegin(), data_.cend(), std::back_inserter(ret), [](const TinyString &s) {
+        return s.size();
     });
     return ret;
 }
