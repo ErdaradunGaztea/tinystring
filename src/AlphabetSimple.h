@@ -6,6 +6,7 @@
 #include <cstdint>
 #include <stdexcept>
 
+#include "const.h"
 #include "Alphabet.h"
 
 
@@ -87,8 +88,6 @@ inline char AlphabetSimple::match_letter(const std::byte index) const {
 
 template<uint8_t WIDTH>
 std::vector<std::byte> AlphabetSimple::pack(const std::string& text) const {
-    // ReSharper disable once CppTooWideScope
-    constexpr uint8_t BYTE_WIDTH = 8u;
     const std::vector<std::byte>::size_type out_size = ceil(static_cast<double>(text.size()) * WIDTH / 8.0);
     std::vector<std::byte> out(out_size);
 
@@ -115,7 +114,6 @@ std::vector<std::byte> AlphabetSimple::pack(const std::string& text) const {
 
 template<uint8_t WIDTH>
 std::string AlphabetSimple::unpack(const std::vector<std::byte> &packed, const size_t size) const {
-    constexpr uint8_t BYTE_WIDTH = 8u;
     std::string out;
     out.reserve(size);
 

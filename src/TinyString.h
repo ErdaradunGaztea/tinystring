@@ -2,6 +2,7 @@
 
 #include <vector>
 
+#include "const.h"
 #include "AlphabetSimple.h"
 
 
@@ -49,8 +50,6 @@ inline size_t TinyString::size() const {
 }
 
 inline std::vector<std::byte> TinyString::shifted(const size_t offset) const {
-    constexpr uint8_t BYTE_WIDTH = 8u;
-
     if (size_ == 0) {
         return {};
     }
@@ -71,8 +70,6 @@ inline std::vector<std::byte> TinyString::shifted(const size_t offset) const {
 }
 
 inline TinyString TinyString::subbed(const size_t start, const size_t end) const {
-    constexpr uint8_t BYTE_WIDTH = 8u;
-
     const size_t first_bit = alphabet_->get_width() * start;
     // This is the first bit _not_ to be included
     //  (because it simplifies math a lot compared to having the last bit included)
