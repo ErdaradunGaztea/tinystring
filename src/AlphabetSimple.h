@@ -15,7 +15,7 @@ public:
     explicit AlphabetSimple(const std::vector<char> &letters);
 
     [[nodiscard]] std::vector<std::byte> pack(const std::string &text) const override;
-    [[nodiscard]] std::string unpack(const std::vector<std::byte> &packed, size_t size) const override;
+    [[nodiscard]] std::string unpack(const std::vector<std::byte> &packed, std::size_t size) const override;
     [[nodiscard]] std::byte match_index(char letter) const override;
     [[nodiscard]] char match_letter(std::byte index) const;
 
@@ -23,7 +23,7 @@ private:
     template<uint8_t WIDTH>
     [[nodiscard]] std::vector<std::byte> pack(const std::string &text) const;
     template<uint8_t WIDTH>
-    [[nodiscard]] std::string unpack(const std::vector<std::byte> &packed, size_t size) const;
+    [[nodiscard]] std::string unpack(const std::vector<std::byte> &packed, std::size_t size) const;
 };
 
 
@@ -54,7 +54,7 @@ inline std::vector<std::byte> AlphabetSimple::pack(const std::string &text) cons
     }
 }
 
-inline std::string AlphabetSimple::unpack(const std::vector<std::byte> &packed, const size_t size) const {
+inline std::string AlphabetSimple::unpack(const std::vector<std::byte> &packed, const std::size_t size) const {
     switch (get_width()) {
         case 2:
             return unpack<2>(packed, size);
@@ -113,7 +113,7 @@ std::vector<std::byte> AlphabetSimple::pack(const std::string& text) const {
 }
 
 template<uint8_t WIDTH>
-std::string AlphabetSimple::unpack(const std::vector<std::byte> &packed, const size_t size) const {
+std::string AlphabetSimple::unpack(const std::vector<std::byte> &packed, const std::size_t size) const {
     std::string out;
     out.reserve(size);
 
@@ -121,7 +121,7 @@ std::string AlphabetSimple::unpack(const std::vector<std::byte> &packed, const s
     uint8_t shift = BYTE_WIDTH - WIDTH;
 
     // The solution here is in many ways the reverse of pack()
-    for (size_t i = 0; i < size; i++) {
+    for (std::size_t i = 0; i < size; i++) {
         std::byte index = packed[out_byte] << shift >> (BYTE_WIDTH - WIDTH);
         // Since we optionally included the next byte in pack(), here we include the previous byte instead
         if (shift > BYTE_WIDTH - WIDTH) {

@@ -19,7 +19,7 @@ public:
 
     // Packing algorithm differs between simple and complex alphabets
     [[nodiscard]] virtual std::vector<std::byte> pack(const std::string &text) const = 0;
-    [[nodiscard]] virtual std::string unpack(const std::vector<std::byte> &packed, size_t size) const = 0;
+    [[nodiscard]] virtual std::string unpack(const std::vector<std::byte> &packed, std::size_t size) const = 0;
     // Returning `char` here limits us to 8-bit alphabets
     virtual std::byte match_index(T letter) const = 0;
     void recode_letter(T prev, T next);

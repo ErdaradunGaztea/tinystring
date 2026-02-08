@@ -8,19 +8,19 @@
 
 class TinyString {
     std::vector<std::byte> data_{};
-    size_t size_{};
+    std::size_t size_{};
     const AlphabetSimple *alphabet_ = nullptr;
 
 public:
     explicit TinyString(const AlphabetSimple &alphabet);
-    TinyString(std::vector<std::byte> data, size_t size, const AlphabetSimple &alphabet);
+    TinyString(std::vector<std::byte> data, std::size_t size, const AlphabetSimple &alphabet);
     TinyString(const TinyString &other, const AlphabetSimple &alphabet);
     TinyString(const std::string &text, const AlphabetSimple &alphabet);
 
     [[nodiscard]] std::string unpack() const;
-    [[nodiscard]] size_t size() const;
-    [[nodiscard]] std::vector<std::byte> shifted(size_t offset) const;
-    [[nodiscard]] TinyString subbed(size_t start, size_t end) const;
+    [[nodiscard]] std::size_t size() const;
+    [[nodiscard]] std::vector<std::byte> shifted(std::size_t offset) const;
+    [[nodiscard]] TinyString subbed(std::size_t start, std::size_t end) const;
     void append(const TinyString &other);
 };
 
@@ -28,7 +28,7 @@ public:
 inline TinyString::TinyString(const AlphabetSimple &alphabet) : alphabet_(&alphabet) {
 }
 
-inline TinyString::TinyString(std::vector<std::byte> data, const size_t size,
+inline TinyString::TinyString(std::vector<std::byte> data, const std::size_t size,
                               const AlphabetSimple &alphabet) : data_(std::move(data)), size_(size),
                                                                 alphabet_(&alphabet) {
 }
@@ -45,21 +45,21 @@ inline std::string TinyString::unpack() const {
     return alphabet_->unpack(data_, size_);
 }
 
-inline size_t TinyString::size() const {
+inline std::size_t TinyString::size() const {
     return size_;
 }
 
-inline std::vector<std::byte> TinyString::shifted(const size_t offset) const {
+inline std::vector<std::byte> TinyString::shifted(const std::size_t offset) const {
     if (size_ == 0) {
         return {};
     }
 
-    const auto out_size = static_cast<size_t>(
+    const auto out_size = static_cast<std::size_t>(
         ceil(static_cast<double>(alphabet_->get_width() * size_ + offset) / 8.0));
     std::vector<std::byte> out(out_size);
 
     out.at(0) = data_.at(0) << offset;
-    for (size_t i = 1; i < data_.size(); i++) {
+    for (std::size_t i = 1; i < data_.size(); i++) {
         out.at(i) = (data_.at(i - 1) >> (BYTE_WIDTH - offset)) | (data_.at(i) << offset);
     }
     if (out_size > data_.size()) {
@@ -69,25 +69,25 @@ inline std::vector<std::byte> TinyString::shifted(const size_t offset) const {
     return out;
 }
 
-inline TinyString TinyString::subbed(const size_t start, const size_t end) const {
-    const size_t first_bit = alphabet_->get_width() * start;
+inline TinyString TinyString::subbed(const std::size_t start, const std::size_t end) const {
+    const std::size_t first_bit = alphabet_->get_width() * start;
     // This is the first bit _not_ to be included
     //  (because it simplifies math a lot compared to having the last bit included)
-    const size_t end_bit = alphabet_->get_width() * (end + 1);
+    const std::size_t end_bit = alphabet_->get_width() * (end + 1);
     const uint8_t first_bit_loc = first_bit % BYTE_WIDTH;
     const uint8_t end_bit_loc = end_bit % BYTE_WIDTH;
-    const size_t first_byte = first_bit / BYTE_WIDTH;
+    const std::size_t first_byte = first_bit / BYTE_WIDTH;
 
-    const auto out_size = static_cast<size_t>(ceil(static_cast<double>(end_bit - first_bit) / 8.0));
+    const auto out_size = static_cast<std::size_t>(ceil(static_cast<double>(end_bit - first_bit) / 8.0));
     std::vector<std::byte> out(out_size);
 
-    for (size_t i = 0; i < out_size - 1; i++) {
+    for (std::size_t i = 0; i < out_size - 1; i++) {
         out.at(i) = data_.at(first_byte + i) >> first_bit_loc |
                     data_.at(first_byte + i + 1) << (8 - first_bit_loc);
     }
 
     // The logic for the last byte of the output is somewhat complex
-    const size_t i = out_size - 1;
+    const std::size_t i = out_size - 1;
     if (first_bit_loc >= end_bit_loc) {
         // If the last byte spans two different bytes of the input
         //  we shift all that's left of the first byte

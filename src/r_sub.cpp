@@ -5,7 +5,7 @@
 #include "null_pointer.cpp"
 
 [[cpp11::register]]
-SEXP rcpp_sub(SEXP x, const size_t start, const size_t end) {
+SEXP rcpp_sub(SEXP x, const std::size_t start, const std::size_t end) {
     const cpp11::external_pointer<TinyStrings> x_ptr(x);
     assert_not_null_pointer(x_ptr);
 

@@ -20,8 +20,8 @@ public:
 
     [[nodiscard]] std::vector<std::string> unpack() const;
     [[nodiscard]] TinyStrings *flattened() const;
-    [[nodiscard]] TinyStrings *subbed(size_t start, size_t end) const;
-    [[nodiscard]] std::vector<size_t> sizes() const;
+    [[nodiscard]] TinyStrings *subbed(std::size_t start, std::size_t end) const;
+    [[nodiscard]] std::vector<std::size_t> sizes() const;
     std::vector<TinyString> &get_data();
     AlphabetSimple &get_alphabet();
 
@@ -71,7 +71,7 @@ inline TinyStrings* TinyStrings::flattened() const {
     return new TinyStrings(flat_data, alphabet_);
 }
 
-inline TinyStrings* TinyStrings::subbed(size_t start, size_t end) const {
+inline TinyStrings* TinyStrings::subbed(std::size_t start, std::size_t end) const {
     std::vector<TinyString> subbed{};
     std::transform(data_.cbegin(), data_.cend(), std::back_inserter(subbed), [start, end](const TinyString &s) {
         return s.subbed(start, end);
@@ -79,8 +79,8 @@ inline TinyStrings* TinyStrings::subbed(size_t start, size_t end) const {
     return new TinyStrings(subbed, alphabet_);
 }
 
-inline std::vector<size_t> TinyStrings::sizes() const {
-    std::vector<size_t> ret;
+inline std::vector<std::size_t> TinyStrings::sizes() const {
+    std::vector<std::size_t> ret;
     // Extracting .size() would be easier in C++20, where we'd have access to std::ranges
     std::transform(data_.cbegin(), data_.cend(), std::back_inserter(ret), [](const TinyString &s) {
         return s.size();
