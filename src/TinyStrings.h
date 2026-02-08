@@ -68,8 +68,7 @@ inline TinyStrings* TinyStrings::flattened() const {
         flat_data.append(s);
     }
 
-    auto *flattened = new TinyStrings(flat_data, alphabet_);
-    return flattened;
+    return new TinyStrings(flat_data, alphabet_);
 }
 
 inline TinyStrings* TinyStrings::subbed(size_t start, size_t end) const {
