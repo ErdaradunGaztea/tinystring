@@ -20,7 +20,7 @@ public:
     [[nodiscard]] std::string unpack() const;
     [[nodiscard]] size_t size() const;
     [[nodiscard]] std::vector<std::byte> shifted(size_t offset) const;
-    TinyString subbed(size_t start, size_t end) const;
+    [[nodiscard]] TinyString subbed(size_t start, size_t end) const;
     void append(const TinyString &other);
 };
 
@@ -99,7 +99,7 @@ inline TinyString TinyString::subbed(const size_t start, const size_t end) const
         out.at(i) = data_.at(i + first_byte) << (8 - end_bit_loc) >> (8 - end_bit_loc + first_bit_loc);
     }
 
-    return TinyString(out, end - start + 1, *alphabet_);
+    return {out, end - start + 1, *alphabet_};
 }
 
 inline void TinyString::append(const TinyString &other) {

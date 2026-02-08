@@ -10,7 +10,7 @@ Description: Allows the user to efficiently store and process strings with limit
 License: GPL (>= 3)
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.3.2
+RoxygenNote: 7.3.3
 Depends:
     R (>= 4.0.0)
 Suggests: 
@@ -21,3 +21,4 @@ LinkingTo:
     cpp11
 SystemRequirements: C++17
 Config/testthat/edition: 3
+Config/testthat/parallel: TRUE

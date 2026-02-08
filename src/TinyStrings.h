@@ -50,7 +50,7 @@ inline TinyStrings::TinyStrings(const TinyStrings &other) : alphabet_(other.alph
 
 inline std::vector<std::string> TinyStrings::unpack() const {
     std::vector<std::string> ret;
-    std::transform(data_.cbegin(), data_.cend(), std::back_inserter(ret), [this](const TinyString &s) {
+    std::transform(data_.cbegin(), data_.cend(), std::back_inserter(ret), [](const TinyString &s) {
         return s.unpack();
     });
     return ret;

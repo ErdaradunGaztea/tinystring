@@ -35,6 +35,8 @@ tstr_c(
   demo_strings, tstr_pack(c("aix"))
 )
 
+demo_strings <- tstr_pack(c("aixpabsj", "bixxyi"))
+
 demo_strings |>
   tstr_sub(start = 1, end = 4) |>
   tstr_unpack()

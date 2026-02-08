@@ -122,10 +122,10 @@ std::string AlphabetSimple::unpack(const std::vector<std::byte> &packed, const s
 
     // The solution here is in many ways the reverse of pack()
     for (size_t i = 0; i < size; i++) {
-        std::byte index = packed[out_byte] << shift >> BYTE_WIDTH - WIDTH;
+        std::byte index = packed[out_byte] << shift >> (BYTE_WIDTH - WIDTH);
         // Since we optionally included the next byte in pack(), here we include the previous byte instead
         if (shift > BYTE_WIDTH - WIDTH) {
-            index |= packed[out_byte - 1] >> 2 * BYTE_WIDTH - WIDTH - shift;
+            index |= packed[out_byte - 1] >> (2 * BYTE_WIDTH - WIDTH - shift);
         }
         out += match_letter(index);
 
