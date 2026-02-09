@@ -1,24 +1,31 @@
-## Input length ----------------------------------------------------------------
-test_that("works for 1 string", {
-  input <- tstr_pack("pamjjs")
+# tstr_length() ================================================================
+expect_string_length <- function(input) {
   output <- tstr_length(input)
 
   expect_length(output, length(input))
-  expect_equal(output, 6)
+  expect_type(output, "integer")
+  expect_equal(
+    output,
+    tstr_unpack(input) |>
+      stringr::str_length()
+  )
+}
+
+## Input length ----------------------------------------------------------------
+test_that("works for 1 string", {
+  expect_string_length(
+    tstr_pack("pamjjs")
+  )
 })
 
 test_that("works for multiple strings", {
-  input <- tstr_pack(c("pamjjs", "sbp", "suy"))
-  output <- tstr_length(input)
-
-  expect_length(output, length(input))
-  expect_equal(output, c(6, 3, 3))
+  expect_string_length(
+    tstr_pack(c("pamjjs", "sbp", "suy"))
+  )
 })
 
 test_that("works for 0 strings", {
-  input <- tstr_pack(character())
-  output <- tstr_length(input)
-
-  expect_length(output, length(input))
-  expect_equal(output, integer())
+  expect_string_length(
+    tstr_pack(character())
+  )
 })
