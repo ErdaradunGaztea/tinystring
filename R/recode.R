@@ -17,15 +17,12 @@
 tstr_recode <- function(x, ...) {
   # TODO: Consider importing {rlang} for list2() with extra features
   dots <- list(...)
-  stopifnot(
-    # All dots are strings
-    all(vapply(dots, is.character, logical(1))),
-    # All strings are atomic
-    all(lengths(dots) == 1),
-    # All names exist
-    !is.null(names(dots)),
-    all(names(dots) != "")
-  )
+  # All names exist and are not duplicated
+  checkmate::assert_named(dots, type = "unique")
+  for (el in dots) {
+    # All dots are scalar strings
+    checkmate::assert_string(el)
+  }
 
   UseMethod("tstr_recode")
 }

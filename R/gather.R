@@ -15,7 +15,7 @@
 #'
 #' @export
 tstr_gather <- function(x, ..., .unmentioned = NULL) {
-  stopifnot(inherits(x, "tstr"))
+  checkmate::assert_class(x, "tstr")
 
   stop("`tstr_gather()` not implemented")
   # rcpp_gather(x)

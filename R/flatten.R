@@ -18,8 +18,8 @@
 #'
 #' @export
 tstr_flatten <- function(x, collapse = character()) {
-  stopifnot(inherits(x, "tstr"))
-  stopifnot(is.character(collapse))
+  checkmate::assert_class(x, "tstr")
+  checkmate::assert_character(collapse)
 
   if (!identical(collapse, character())) {
     stop("Custom `collapse` parameter not yet supported")

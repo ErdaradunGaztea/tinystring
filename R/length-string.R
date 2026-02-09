@@ -14,7 +14,7 @@
 #'
 #' @export
 tstr_length <- function(x) {
-  stopifnot(inherits(x, "tstr"))
+  checkmate::assert_class(x, "tstr")
 
   rcpp_length(x)
 }

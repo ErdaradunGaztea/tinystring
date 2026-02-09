@@ -15,13 +15,12 @@
 tstr_c <- function(..., sep = character()) {
   dots <- list(...)
   dot_lengths <- lengths(dots)
-  stopifnot(
-    # All dots are TinyStrings
-    # TODO: Should this function allow passing characters that would be then coerced to TinyStrings?
-    all(vapply(dots, function(x) { inherits(x, "tstr") }, logical(1))),
-    all(dot_lengths %in% c(1, max(dot_lengths)))
-  )
-  stopifnot(is.character(sep))
+
+  # All dots are TinyStrings
+  # TODO: Should this function allow passing characters that would be then coerced to TinyStrings?
+  checkmate::assert_list(dots, types = "tstr")
+  checkmate::assert_subset(dot_lengths, c(1, max(dot_lengths)))
+  checkmate::assert_character(sep)
 
   stop("`tstr_c()` not implemented")
   # structure(

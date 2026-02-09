@@ -16,7 +16,7 @@ length.tstr <- function(x) {
 #' @rdname length.tstr
 #' @export
 `length<-.tstr` <- function(x, value) {
-  stopifnot(rlang::is_scalar_integerish(value, finite = TRUE))
+  checkmate::assert_count(value)
 
   rcpp_set_length(x, value)
 }
