@@ -17,6 +17,8 @@
 #' @export
 tstr_sub <- function(x, start = 1L, end = min(tstr_length(x))) {
   stopifnot(inherits(x, "tstr"))
+  stopifnot(start >= 1L)
+  stopifnot(end >= start)
 
   structure(
     rcpp_sub(x, start, end),
