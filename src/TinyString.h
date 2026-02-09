@@ -19,7 +19,7 @@ public:
 
     [[nodiscard]] std::string unpack() const;
     [[nodiscard]] std::size_t size() const;
-    [[nodiscard]] std::vector<std::byte> shifted(std::size_t offset) const;
+    [[nodiscard]] std::vector<std::byte> shifted(uint8_t offset) const;
     [[nodiscard]] TinyString subbed(std::size_t start, std::size_t end) const;
     void append(const TinyString &other);
 };
@@ -49,7 +49,7 @@ inline std::size_t TinyString::size() const {
     return size_;
 }
 
-inline std::vector<std::byte> TinyString::shifted(const std::size_t offset) const {
+inline std::vector<std::byte> TinyString::shifted(const uint8_t offset) const {
     if (size_ == 0) {
         return {};
     }
@@ -83,7 +83,7 @@ inline TinyString TinyString::subbed(const std::size_t start, const std::size_t 
 
     for (std::size_t i = 0; i < out_size - 1; i++) {
         out.at(i) = data_.at(first_byte + i) >> first_bit_loc |
-                    data_.at(first_byte + i + 1) << (8 - first_bit_loc);
+                    data_.at(first_byte + i + 1) << (BYTE_WIDTH - first_bit_loc);
     }
 
     // The logic for the last byte of the output is somewhat complex
@@ -93,10 +93,10 @@ inline TinyString TinyString::subbed(const std::size_t start, const std::size_t 
         //  we shift all that's left of the first byte
         //  then add the few bits of the second byte
         out.at(i) = data_.at(first_byte + i) >> first_bit_loc |
-                    data_.at(first_byte + i + 1) << (8 - end_bit_loc) >> (first_bit_loc - end_bit_loc);
+                    data_.at(first_byte + i + 1) << (BYTE_WIDTH - end_bit_loc) >> (first_bit_loc - end_bit_loc);
     } else {
         // Otherwise we shift left and right to zero everything that's outside our area of interest
-        out.at(i) = data_.at(i + first_byte) << (8 - end_bit_loc) >> (8 - end_bit_loc + first_bit_loc);
+        out.at(i) = data_.at(i + first_byte) << (BYTE_WIDTH - end_bit_loc) >> (BYTE_WIDTH - end_bit_loc + first_bit_loc);
     }
 
     return {out, end - start + 1, *alphabet_};
@@ -113,9 +113,9 @@ inline void TinyString::append(const TinyString &other) {
         return;
     }
 
-    uint8_t offset = (alphabet_->get_width() * size_) % 8;
+    uint8_t offset = (alphabet_->get_width() * size_) % BYTE_WIDTH;
     // If we do that then we don't have to handle special case of offset == 0 later
-    offset = offset == 0 ? 8 : offset;
+    offset = offset == 0 ? BYTE_WIDTH : offset;
 
     auto data_shifted = other.shifted(offset);
 

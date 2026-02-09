@@ -15,7 +15,7 @@ cpp11::writable::integers rcpp_length(SEXP x) {
 }
 
 [[cpp11::register]]
-unsigned long long rcpp_num_strings(SEXP x) {
+std::size_t rcpp_num_strings(SEXP x) {
     const cpp11::external_pointer<TinyStrings> x_ptr(x);
     assert_not_null_pointer(x_ptr);
 

@@ -20,7 +20,7 @@ extern "C" SEXP _tinystring_rcpp_length(SEXP x) {
   END_CPP11
 }
 // r_length.cpp
-unsigned long long rcpp_num_strings(SEXP x);
+std::size_t rcpp_num_strings(SEXP x);
 extern "C" SEXP _tinystring_rcpp_num_strings(SEXP x) {
   BEGIN_CPP11
     return cpp11::as_sexp(rcpp_num_strings(cpp11::as_cpp<cpp11::decay_t<SEXP>>(x)));
@@ -62,7 +62,7 @@ extern "C" SEXP _tinystring_rcpp_sub(SEXP x, SEXP start, SEXP end) {
   END_CPP11
 }
 // r_unpack.cpp
-cpp11::strings rcpp_unpack(SEXP x);
+cpp11::writable::strings rcpp_unpack(SEXP x);
 extern "C" SEXP _tinystring_rcpp_unpack(SEXP x) {
   BEGIN_CPP11
     return cpp11::as_sexp(rcpp_unpack(cpp11::as_cpp<cpp11::decay_t<SEXP>>(x)));

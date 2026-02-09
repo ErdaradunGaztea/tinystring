@@ -24,7 +24,7 @@ SEXP rcpp_recode(SEXP x, const cpp11::list_of<cpp11::strings> &recodes) {
     const auto recoded = new TinyStrings(*x_ptr);
     cpp11::external_pointer<TinyStrings> recoded_ptr(recoded);
 
-    for (uint32_t i = 0; i < std_prev.size(); i++) {
+    for (std::size_t i = 0; i < std_prev.size(); i++) {
         recoded_ptr->get_alphabet().recode_letter(std_prev.at(i), std_next.at(i));
     }
 
@@ -47,7 +47,7 @@ SEXP rcpp_ip_recode(SEXP x, const cpp11::list_of<cpp11::strings> &recodes) {
         return std::string(s.at(0)).at(0);
     });
 
-    for (uint32_t i = 0; i < std_prev.size(); i++) {
+    for (std::size_t i = 0; i < std_prev.size(); i++) {
         x_ptr->get_alphabet().recode_letter(std_prev.at(i), std_next.at(i));
     }
 

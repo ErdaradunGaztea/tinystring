@@ -46,7 +46,7 @@ inline TinyStrings::TinyStrings(const TinyStrings &other) : alphabet_(other.alph
     std::transform(other.data_.cbegin(), other.data_.cend(), std::back_inserter(data_), [this](const TinyString &s) {
        return TinyString(s, alphabet_);
     });
-};
+}
 
 inline std::vector<std::string> TinyStrings::unpack() const {
     std::vector<std::string> ret;
