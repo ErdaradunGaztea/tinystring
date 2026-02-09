@@ -5,6 +5,8 @@
 #'
 #' @param x \[`tstr()`\]\cr
 #'  A TinyString object.
+#' @param value \[`integer(1)`\]\cr
+#'  For the setter function, new length for the `x` object.
 #'
 #' @return A single integer with the number of strings.
 #'

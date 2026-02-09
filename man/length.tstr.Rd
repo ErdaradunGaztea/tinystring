@@ -12,6 +12,9 @@
 \arguments{
 \item{x}{[\code{tstr()}]\cr
 A TinyString object.}
+
+\item{value}{[\code{integer(1)}]\cr
+For the setter function, new length for the \code{x} object.}
 }
 \value{
 A single integer with the number of strings.
