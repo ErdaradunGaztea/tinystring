@@ -9,7 +9,7 @@
 #'  Separator to insert between strings; each element of the vector is treated as a separate letter. `NA` characters
 #'  are allowed.
 #'
-#' @return TinyString with as many elements as \link[vctrs::vec_size]{the common size} of the input.
+#' @return TinyString with as many elements as [the common size][vctrs::vec_size()] of the input.
 #'
 #' @export
 tstr_c <- function(..., sep = character()) {

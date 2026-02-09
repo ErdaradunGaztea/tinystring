@@ -15,7 +15,7 @@ Separator to insert between strings; each element of the vector is treated as a 
 are allowed.}
 }
 \value{
-TinyString with as many elements as \link[vctrs::vec_size]{the common size} of the input.
+TinyString with as many elements as \link[vctrs:vec_size]{the common size} of the input.
 }
 \description{
 TODO
