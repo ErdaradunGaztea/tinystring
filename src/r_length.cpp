@@ -1,7 +1,7 @@
 #include <cpp11/external_pointer.hpp>
 #include <cpp11/integers.hpp>
 
-#include "TinyStrings.h"
+#include <tinystring/TinyStrings.h>
 #include "null_pointer.cpp"
 
 [[cpp11::register]]

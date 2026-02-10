@@ -6,7 +6,7 @@
 #include <vector>
 #include <algorithm>
 
-#include "TinyStrings.h"
+#include <tinystring/TinyStrings.h>
 
 [[cpp11::register]]
 SEXP rcpp_pack(const cpp11::strings &x, const cpp11::strings &alphabet) {

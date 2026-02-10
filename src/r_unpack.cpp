@@ -4,7 +4,7 @@
 #include <string>
 #include <vector>
 
-#include "TinyStrings.h"
+#include <tinystring/TinyStrings.h>
 #include "null_pointer.cpp"
 
 [[cpp11::register]]
