@@ -40,3 +40,10 @@ test_that("works for 0 strings w/ positive indices", {
     end = 4
   )
 })
+
+test_that("end index past string length returns string till its end", {
+  output <- expect_sub(
+    tstr_pack(c("pamjjs", "sbpaa", "suyvpsnna")),
+    start = 4, end = 8
+  )
+})

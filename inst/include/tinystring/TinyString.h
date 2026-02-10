@@ -20,8 +20,12 @@ public:
     [[nodiscard]] std::string unpack() const;
     [[nodiscard]] std::size_t size() const;
     [[nodiscard]] std::vector<std::byte> shifted(uint8_t offset) const;
-    [[nodiscard]] TinyString subbed(std::size_t start, std::size_t end) const;
+    [[nodiscard]] TinyString subbed(long long start, long long end) const;
     void append(const TinyString &other);
+
+private:
+    template <bool LEFT>
+    std::size_t translate_index(long long r_index) const;
 };
 
 
@@ -69,11 +73,14 @@ inline std::vector<std::byte> TinyString::shifted(const uint8_t offset) const {
     return out;
 }
 
-inline TinyString TinyString::subbed(const std::size_t start, const std::size_t end) const {
-    const std::size_t first_bit = alphabet_->get_width() * start;
+inline TinyString TinyString::subbed(const long long start, const long long end) const {
+    const std::size_t start_actual = translate_index<true>(start);
+    const std::size_t end_actual = translate_index<false>(end);
+
+    const std::size_t first_bit = alphabet_->get_width() * start_actual;
     // This is the first bit _not_ to be included
     //  (because it simplifies math a lot compared to having the last bit included)
-    const std::size_t end_bit = alphabet_->get_width() * (end + 1);
+    const std::size_t end_bit = alphabet_->get_width() * (end_actual + 1);
     const uint8_t first_bit_loc = first_bit % BYTE_WIDTH;
     const uint8_t end_bit_loc = end_bit % BYTE_WIDTH;
     const std::size_t first_byte = first_bit / BYTE_WIDTH;
@@ -99,7 +106,7 @@ inline TinyString TinyString::subbed(const std::size_t start, const std::size_t 
         out.at(i) = data_.at(i + first_byte) << (BYTE_WIDTH - end_bit_loc) >> (BYTE_WIDTH - end_bit_loc + first_bit_loc);
     }
 
-    return {out, end - start + 1, *alphabet_};
+    return {out, end_actual - start_actual + 1, *alphabet_};
 }
 
 inline void TinyString::append(const TinyString &other) {
@@ -125,4 +132,18 @@ inline void TinyString::append(const TinyString &other) {
 
     data_.insert(data_.end(), data_shifted.cbegin(), data_shifted.cend());
     size_ += other.size_;
+}
+
+template <bool LEFT>
+std::size_t TinyString::translate_index(const long long r_index) const {
+    const long long size_signed = static_cast<long long>(size_);
+
+    if (r_index > 0) {
+        return std::min(r_index - 1, LEFT ? size_signed : size_signed - 1);
+    }
+    if (r_index < 0) {
+        // TODO: Think how LEFT influences this computation
+        return size_signed - r_index;
+    }
+    cpp11::stop("0 is not a valid index");
 }

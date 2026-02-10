@@ -20,7 +20,7 @@ public:
 
     [[nodiscard]] std::vector<std::string> unpack() const;
     [[nodiscard]] TinyStrings *flattened() const;
-    [[nodiscard]] TinyStrings *subbed(std::size_t start, std::size_t end) const;
+    [[nodiscard]] TinyStrings *subbed(long long start, long long end) const;
     [[nodiscard]] std::vector<std::size_t> sizes() const;
     std::vector<TinyString> &get_data();
     AlphabetSimple &get_alphabet();
@@ -71,7 +71,7 @@ inline TinyStrings* TinyStrings::flattened() const {
     return new TinyStrings(flat_data, alphabet_);
 }
 
-inline TinyStrings* TinyStrings::subbed(std::size_t start, std::size_t end) const {
+inline TinyStrings* TinyStrings::subbed(const long long start, const long long end) const {
     std::vector<TinyString> subbed{};
     std::transform(data_.cbegin(), data_.cend(), std::back_inserter(subbed), [start, end](const TinyString &s) {
         return s.subbed(start, end);

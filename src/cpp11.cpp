@@ -55,10 +55,10 @@ extern "C" SEXP _tinystring_rcpp_ip_recode(SEXP x, SEXP recodes) {
   END_CPP11
 }
 // r_sub.cpp
-SEXP rcpp_sub(SEXP x, const std::size_t start, const std::size_t end);
+SEXP rcpp_sub(SEXP x, const long long start, const long long end);
 extern "C" SEXP _tinystring_rcpp_sub(SEXP x, SEXP start, SEXP end) {
   BEGIN_CPP11
-    return cpp11::as_sexp(rcpp_sub(cpp11::as_cpp<cpp11::decay_t<SEXP>>(x), cpp11::as_cpp<cpp11::decay_t<const std::size_t>>(start), cpp11::as_cpp<cpp11::decay_t<const std::size_t>>(end)));
+    return cpp11::as_sexp(rcpp_sub(cpp11::as_cpp<cpp11::decay_t<SEXP>>(x), cpp11::as_cpp<cpp11::decay_t<const long long>>(start), cpp11::as_cpp<cpp11::decay_t<const long long>>(end)));
   END_CPP11
 }
 // r_unpack.cpp
