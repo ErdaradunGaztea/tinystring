@@ -73,12 +73,19 @@ inline std::vector<std::byte> TinyString::shifted(const uint8_t offset) const {
 }
 
 inline TinyString TinyString::subbed(const long long start, const long long end) const {
-    if (start > static_cast<long long>(size_)) {
+    if (start > static_cast<long long>(size_) ||
+        -end > static_cast<long long>(size_) ||
+        (end > 0ll && start > end) ||
+        (start < 0ll && start > end)) {
         return {"", *alphabet_};
     }
 
     const std::size_t start_actual = translate_index(start);
     const std::size_t end_actual = translate_index(end);
+
+    if (start_actual > end_actual) {
+        return {"", *alphabet_};
+    }
 
     const std::size_t first_bit = alphabet_->get_width() * start_actual;
     // This is the first bit _not_ to be included
@@ -138,13 +145,13 @@ inline void TinyString::append(const TinyString &other) {
 }
 
 inline std::size_t TinyString::translate_index(const long long r_index) const {
-    const long long size_signed = static_cast<long long>(size_);
+    const auto size_signed = static_cast<long long>(size_);
 
     if (r_index > 0) {
         return std::min(r_index - 1, size_signed - 1);
     }
     if (r_index < 0) {
-        return std::max(size_signed - r_index, 0ll);
+        return std::max(size_signed + r_index, 0ll);
     }
     cpp11::stop("0 is not a valid index");
 }

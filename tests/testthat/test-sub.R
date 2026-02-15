@@ -8,51 +8,113 @@ expect_sub <- function(input, start, end) {
     tstr_unpack(input) |>
       stringr::str_sub(start = start, end = end)
   )
-
-  output
-}
-
-expect_sub_positive <- function(input) {
-  output <- expect_sub(input, start = 2, end = 4)
-  expect_all_equal(
-    tstr_length(output),
-    4 - 2 + 1
-  )
 }
 
 ## Positive indices ------------------------------------------------------------
 test_that("works for 1 string w/ positive indices", {
-  expect_sub_positive(
-    tstr_pack("pamjjs")
+  expect_sub(
+    tstr_pack("iguana"),
+    start = 2, end = 4
   )
 })
 
 test_that("works for multiple strings w/ positive indices", {
-  expect_sub_positive(
-    tstr_pack(c("pamjjs", "sbpaa", "suyvpsnna"))
+  expect_sub(
+    tstr_pack(c("iguana", "sloth", "chameleon")),
+    start = 2, end = 4
   )
 })
 
 test_that("works for 0 strings w/ positive indices", {
   expect_sub(
     tstr_pack(character()),
-    start = 2,
-    end = 4
+    start = 2, end = 4
   )
 })
 
 test_that("end index past string length returns string till its end", {
   expect_sub(
-    tstr_pack(c("pamjjs", "sbpaa", "suyvpsnna")),
-    start = 4,
-    end = 8
+    tstr_pack(c("iguana", "sloth", "chameleon")),
+    start = 4, end = 8
   )
 })
 
 test_that("start index past string length results in an empty string", {
   expect_sub(
-    tstr_pack(c("pamjjs", "sbpaa", "suyvpsnna")),
-    start = 8,
-    end = 11
+    tstr_pack(c("iguana", "sloth", "chameleon")),
+    start = 8, end = 11
+  )
+})
+
+## Negative indices ------------------------------------------------------------
+test_that("works for 1 string w/ positive indices", {
+  expect_sub(
+    tstr_pack("iguana"),
+    start = -4, end = -2
+  )
+})
+
+test_that("works for multiple strings w/ positive indices", {
+  expect_sub(
+    tstr_pack(c("iguana", "sloth", "chameleon")),
+    start = -4, end = -2
+  )
+})
+
+test_that("works for 0 strings w/ positive indices", {
+  expect_sub(
+    tstr_pack(character()),
+    start = -4, end = -2
+  )
+})
+
+test_that("negative start index past string length returns string from its start", {
+  expect_sub(
+    tstr_pack(c("iguana", "sloth", "chameleon")),
+    start = -8, end = -4
+  )
+})
+
+test_that("negative end index past string length results in an empty string", {
+  expect_sub(
+    tstr_pack(c("iguana", "sloth", "chameleon")),
+    start = -11, end = -8
+  )
+})
+
+## Mixed indices ---------------------------------------------------------------
+test_that("negative start w/ positive end", {
+  # start always before end
+  expect_sub(
+    tstr_pack(c("iguana", "sloth", "chameleon")),
+    start = -5, end = 5
+  )
+  # start always after end
+  expect_sub(
+    tstr_pack(c("iguana", "sloth", "chameleon")),
+    start = -2, end = 2
+  )
+  # start sometimes after end
+  expect_sub(
+    tstr_pack(c("iguana", "sloth", "chameleon")),
+    start = -3, end = 4
+  )
+})
+
+test_that("positive start w/ negative end", {
+  # start always before end
+  expect_sub(
+    tstr_pack(c("iguana", "sloth", "chameleon")),
+    start = 2, end = -2
+  )
+  # start always after end
+  expect_sub(
+    tstr_pack(c("iguana", "sloth", "chameleon")),
+    start = 5, end = -5
+  )
+  # start sometimes after end
+  expect_sub(
+    tstr_pack(c("iguana", "sloth", "chameleon")),
+    start = 3, end = -4
   )
 })

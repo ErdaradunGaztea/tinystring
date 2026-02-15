@@ -17,9 +17,8 @@
 #' @export
 tstr_sub <- function(x, start = 1L, end = min(tstr_length(x))) {
   checkmate::assert_class(x, "tstr")
-  # TODO: Implement support for negative indices
-  checkmate::assert_int(start, lower = 1L)
-  checkmate::assert_int(end, lower = start)
+  checkmate::assert_int(start)
+  checkmate::assert_int(end)
 
   structure(
     rcpp_sub(x, start, end),

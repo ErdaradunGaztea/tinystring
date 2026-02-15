@@ -49,3 +49,8 @@ c("vaiixaix", "bixvvx") |>
   tstr_pack(alphabet = c("i", "v", "x")) |>
   tstr_sub(start = 3, end = 5) |>
   tstr_unpack()
+
+c("pamjjs", "sbpaa", "suyvpsnna") |>
+  tstr_pack() |>
+  tstr_sub(start = -4, end = -2) |>
+  tstr_unpack()
