@@ -19,7 +19,7 @@ public:
     TinyStrings(const TinyStrings &other);
 
     [[nodiscard]] std::vector<std::string> unpack() const;
-    [[nodiscard]] TinyStrings *flattened() const;
+    [[nodiscard]] TinyStrings *flattened(const std::vector<std::string>& collapse) const;
     [[nodiscard]] TinyStrings *subbed(long long start, long long end) const;
     [[nodiscard]] std::vector<std::size_t> sizes() const;
     std::vector<TinyString> &get_data();
@@ -56,15 +56,17 @@ inline std::vector<std::string> TinyStrings::unpack() const {
     return ret;
 }
 
-inline TinyStrings* TinyStrings::flattened() const {
-    std::size_t total_size = 0;
-    for (const auto &s: data_) {
-        total_size += s.size();
-    }
+inline TinyStrings* TinyStrings::flattened(const std::vector<std::string>& collapse) const {
+    const TinyString collapse_tstr(collapse, alphabet_);
 
     TinyString flat_data(alphabet_);
 
+    bool first = true;
     for (const auto &s: data_) {
+        // Prepend collapse separator before every string but the first
+        if (!std::exchange(first, false)) {
+            flat_data.append(collapse_tstr);
+        }
         flat_data.append(s);
     }
 

@@ -21,13 +21,8 @@ tstr_flatten <- function(x, collapse = character()) {
   checkmate::assert_class(x, "tstr")
   checkmate::assert_character(collapse)
 
-  if (!identical(collapse, character())) {
-    stop("Custom `collapse` parameter not yet supported")
-  }
-
   structure(
-    rcpp_flatten(x),
-    # rcpp_flatten(x, collapse)
+    rcpp_flatten(x, collapse),
     class = "tstr"
   )
 }

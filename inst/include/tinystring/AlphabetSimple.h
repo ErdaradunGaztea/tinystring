@@ -5,6 +5,7 @@
 #include <algorithm>
 #include <cstdint>
 #include <stdexcept>
+#include <functional>
 
 #include "const.h"
 #include "Alphabet.h"
@@ -15,6 +16,7 @@ public:
     explicit AlphabetSimple(const std::vector<char> &letters);
 
     [[nodiscard]] std::vector<std::byte> pack(const std::string &text) const override;
+    [[nodiscard]] std::vector<std::byte> pack(const std::vector<std::string> &text) const override;
     [[nodiscard]] std::string unpack(const std::vector<std::byte> &packed, std::size_t size) const override;
     [[nodiscard]] std::byte match_index(char letter) const override;
     [[nodiscard]] char match_letter(std::byte index) const;
@@ -52,6 +54,16 @@ inline std::vector<std::byte> AlphabetSimple::pack(const std::string &text) cons
                                           std::to_string(get_width()) +
                                           " but should be between 2 and 8 inclusive");
     }
+}
+
+inline std::vector<std::byte> AlphabetSimple::pack(const std::vector<std::string> &text) const {
+    auto text_converted = std::vector<char>(text.size());
+    std::transform(text.cbegin(), text.cend(), text_converted.begin(), [](const std::string &letter) -> char {
+        return letter.at(0);
+    });
+    // TODO: Temporary workaround; remove after creating pack(std::vector<T>)
+    const std::string text_str(text_converted.cbegin(), text_converted.cend());
+    return pack(text_str);
 }
 
 inline std::string AlphabetSimple::unpack(const std::vector<std::byte> &packed, const std::size_t size) const {

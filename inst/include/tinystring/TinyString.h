@@ -16,6 +16,7 @@ public:
     TinyString(std::vector<std::byte> data, std::size_t size, const AlphabetSimple &alphabet);
     TinyString(const TinyString &other, const AlphabetSimple &alphabet);
     TinyString(const std::string &text, const AlphabetSimple &alphabet);
+    TinyString(const std::vector<std::string> &letters, const AlphabetSimple &alphabet);
 
     [[nodiscard]] std::string unpack() const;
     [[nodiscard]] std::size_t size() const;
@@ -24,7 +25,7 @@ public:
     void append(const TinyString &other);
 
 private:
-    std::size_t translate_index(long long r_index) const;
+    [[nodiscard]] std::size_t translate_index(long long r_index) const;
 };
 
 
@@ -42,6 +43,10 @@ inline TinyString::TinyString(const TinyString &other, const AlphabetSimple &alp
 
 inline TinyString::TinyString(const std::string &text, const AlphabetSimple &alphabet) : TinyString(
     alphabet.pack(text), text.size(), alphabet) {
+}
+
+inline TinyString::TinyString(const std::vector<std::string> &letters, const AlphabetSimple &alphabet) : TinyString(
+    alphabet.pack(letters), letters.size(), alphabet) {
 }
 
 inline std::string TinyString::unpack() const {
