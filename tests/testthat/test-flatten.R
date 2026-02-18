@@ -51,3 +51,61 @@ test_that("ignores empty strings at the end", {
     tstr_pack(c("pamjjs", "suy", "", ""))
   )
 })
+
+## `collapse` parameter --------------------------------------------------------
+test_that("empty `collapse` is the default behaviour", {
+  expect_identical(
+    tstr_pack(c("pamjjs", "sbp", "suy")) |>
+      tstr_flatten(collapse = character()) |>
+      tstr_unpack(),
+    tstr_pack(c("pamjjs", "sbp", "suy")) |>
+      tstr_flatten() |>
+      tstr_unpack()
+  )
+})
+
+test_that("`collapse` with a single element is equal to it being added between all elements", {
+  expect_identical(
+    tstr_pack(c("pamjjs", "sbp", "suy")) |>
+      tstr_flatten(collapse = "x") |>
+      tstr_unpack(),
+    tstr_pack(c("pamjjs", "x", "sbp", "x", "suy")) |>
+      tstr_flatten() |>
+      tstr_unpack()
+  )
+})
+
+test_that("`collapse` with multiple elements is equal to them all being added between all elements as substring", {
+  expect_identical(
+    tstr_pack(c("pamjjs", "sbp", "suy")) |>
+      tstr_flatten(collapse = c("x", "f", "x")) |>
+      tstr_unpack(),
+    tstr_pack(c("pamjjs", "xfx", "sbp", "xfx", "suy")) |>
+      tstr_flatten() |>
+      tstr_unpack()
+  )
+})
+
+test_that("`collapse` isn't applied with a single TinyString", {
+  expect_identical(
+    tstr_pack("pamjjs") |>
+      tstr_flatten(collapse = "x") |>
+      tstr_unpack(),
+    tstr_pack("pamjjs") |>
+      tstr_flatten() |>
+      tstr_unpack()
+  )
+})
+
+test_that("`collapse` isn't applied with a length 0 TinyString", {
+  expect_identical(
+    tstr_pack(character()) |>
+      tstr_flatten(collapse = "x") |>
+      tstr_unpack(),
+    tstr_pack(character()) |>
+      tstr_flatten() |>
+      tstr_unpack()
+  )
+})
+
+# TODO: Test handling `NA` and letters outside of alphabet
