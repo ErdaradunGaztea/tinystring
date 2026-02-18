@@ -25,6 +25,7 @@ public:
     virtual std::byte match_index(T letter) const = 0;
     void recode_letter(T prev, T next);
     [[nodiscard]] uint8_t get_width() const;
+    [[nodiscard]] std::vector<T> get_letters() const;
 
 private:
     static uint8_t determine_width(const std::vector<T> &letters);
@@ -59,3 +60,9 @@ template<class T>
 std::byte Alphabet<T>::max_index(const std::vector<T> &letters) {
     return static_cast<std::byte>(pow(2, determine_width(letters)) - 1);
 }
+
+template<class T>
+std::vector<T> Alphabet<T>::get_letters() const {
+    return letters_;
+}
+
