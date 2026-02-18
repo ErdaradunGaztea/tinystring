@@ -1,6 +1,7 @@
 #pragma once
 
 #include <vector>
+#include <cpp11/protect.hpp>
 
 #include "const.h"
 #include "AlphabetSimple.h"

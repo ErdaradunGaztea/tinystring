@@ -13,6 +13,7 @@ add_library(tinystring STATIC
         inst/include/tinystring/TinyStrings.h
         inst/include/tinystring/TinyString.h
         inst/include/tinystring/const.h
+        inst/include/tinystring_types.h
 )
 set_target_properties(tinystring PROPERTIES LINKER_LANGUAGE CXX)
 
