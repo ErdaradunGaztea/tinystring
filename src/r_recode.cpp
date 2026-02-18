@@ -3,11 +3,11 @@
 #include <cpp11/external_pointer.hpp>
 
 #include <tinystring/TinyStrings.h>
+#include <tinystring_types.h>
 #include "null_pointer.cpp"
 
 [[cpp11::register]]
-SEXP rcpp_recode(SEXP x, const cpp11::list_of<cpp11::strings> &recodes) {
-    cpp11::external_pointer<TinyStrings> x_ptr(x);
+TinyStrings_ptr rcpp_recode(const TinyStrings_ptr& x_ptr, const cpp11::list_of<cpp11::strings> &recodes) {
     assert_not_null_pointer(x_ptr);
 
     const cpp11::strings next = recodes.names();
@@ -21,8 +21,8 @@ SEXP rcpp_recode(SEXP x, const cpp11::list_of<cpp11::strings> &recodes) {
         return std::string(s.at(0)).at(0);
     });
 
-    const auto recoded = new TinyStrings(*x_ptr);
-    cpp11::external_pointer<TinyStrings> recoded_ptr(recoded);
+    const auto recoded = new TinyStrings(*x_ptr.get()); // NOLINT(*-redundant-smartptr-get)
+    TinyStrings_ptr recoded_ptr(recoded);
 
     for (std::size_t i = 0; i < std_prev.size(); i++) {
         recoded_ptr->get_alphabet().recode_letter(std_prev.at(i), std_next.at(i));
@@ -32,8 +32,7 @@ SEXP rcpp_recode(SEXP x, const cpp11::list_of<cpp11::strings> &recodes) {
 }
 
 [[cpp11::register]]
-SEXP rcpp_ip_recode(SEXP x, const cpp11::list_of<cpp11::strings> &recodes) {
-    cpp11::external_pointer<TinyStrings> x_ptr(x);
+TinyStrings_ptr rcpp_ip_recode(const TinyStrings_ptr& x_ptr, const cpp11::list_of<cpp11::strings> &recodes) {
     assert_not_null_pointer(x_ptr);
 
     const cpp11::strings next = recodes.names();
