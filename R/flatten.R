@@ -12,10 +12,15 @@
 #' @return TinyString with one element.
 #'
 #' @examples
-#' tstr_pack(c("rllssllsrrlr", "slllsr"), alphabet = c("s", "l", "r")) |>
+#' c("rllssllsrrlr", "slllsr") |>
+#'   tstr_pack(alphabet = c("s", "l", "r")) |>
 #'   tstr_flatten() |>
 #'   tstr_unpack()
 #'
+#' c("rllssllsrrlr", "slllsr") |>
+#'   tstr_pack(alphabet = c("s", "l", "r")) |>
+#'   tstr_flatten(collapse = c("l", "r")) |>
+#'   tstr_unpack()
 #' @export
 tstr_flatten <- function(x, collapse = character()) {
   checkmate::assert_class(x, "tstr")
