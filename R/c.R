@@ -18,13 +18,21 @@ tstr_c <- function(..., sep = character()) {
 
   # All dots are TinyStrings
   # TODO: Should this function allow passing characters that would be then coerced to TinyStrings?
-  checkmate::assert_list(dots, types = "tstr")
-  checkmate::assert_subset(dot_lengths, c(1, max(dot_lengths)))
+  checkmate::assert_list(dots, types = "tstr", min.len = 1L)
+  checkmate::assert_subset(dot_lengths, c(1L, max(dot_lengths)))
   checkmate::assert_character(sep)
 
-  stop("`tstr_c()` not implemented")
-  # structure(
-  #   rcpp_c(dots, sep),
-  #   class = "tstr"
-  # )
+  # All TinyStrings must have the same alphabet
+  # (might change that in the future)
+  alphabets <- lapply(dots, alphabet)
+  checkmate::assert_true(
+    alphabets[-1] |>
+      vapply(function(x) { identical(x, alphabets[[1]]) }, logical(1)) |>
+      all()
+  )
+
+  structure(
+    rcpp_c(dots, sep),
+    class = "tstr"
+  )
 }

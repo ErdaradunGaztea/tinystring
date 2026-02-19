@@ -4,6 +4,10 @@ rcpp_alphabet <- function(x_ptr) {
   .Call(`_tinystring_rcpp_alphabet`, x_ptr)
 }
 
+rcpp_c <- function(dots, sep) {
+  .Call(`_tinystring_rcpp_c`, dots, sep)
+}
+
 rcpp_flatten <- function(x_ptr, collapse) {
   .Call(`_tinystring_rcpp_flatten`, x_ptr, collapse)
 }

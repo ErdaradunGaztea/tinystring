@@ -12,6 +12,13 @@ extern "C" SEXP _tinystring_rcpp_alphabet(SEXP x_ptr) {
     return cpp11::as_sexp(rcpp_alphabet(cpp11::as_cpp<cpp11::decay_t<const TinyStrings_ptr&>>(x_ptr)));
   END_CPP11
 }
+// r_c.cpp
+TinyStrings_ptr rcpp_c(const cpp11::list_of<TinyStrings_ptr> & dots, const cpp11::strings & sep);
+extern "C" SEXP _tinystring_rcpp_c(SEXP dots, SEXP sep) {
+  BEGIN_CPP11
+    return cpp11::as_sexp(rcpp_c(cpp11::as_cpp<cpp11::decay_t<const cpp11::list_of<TinyStrings_ptr> &>>(dots), cpp11::as_cpp<cpp11::decay_t<const cpp11::strings &>>(sep)));
+  END_CPP11
+}
 // r_flatten.cpp
 TinyStrings_ptr rcpp_flatten(const TinyStrings_ptr& x_ptr, const cpp11::strings & collapse);
 extern "C" SEXP _tinystring_rcpp_flatten(SEXP x_ptr, SEXP collapse) {
@@ -79,6 +86,7 @@ extern "C" SEXP _tinystring_rcpp_unpack(SEXP x_ptr) {
 extern "C" {
 static const R_CallMethodDef CallEntries[] = {
     {"_tinystring_rcpp_alphabet",    (DL_FUNC) &_tinystring_rcpp_alphabet,    1},
+    {"_tinystring_rcpp_c",           (DL_FUNC) &_tinystring_rcpp_c,           2},
     {"_tinystring_rcpp_flatten",     (DL_FUNC) &_tinystring_rcpp_flatten,     2},
     {"_tinystring_rcpp_ip_recode",   (DL_FUNC) &_tinystring_rcpp_ip_recode,   2},
     {"_tinystring_rcpp_length",      (DL_FUNC) &_tinystring_rcpp_length,      1},

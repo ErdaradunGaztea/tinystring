@@ -22,6 +22,7 @@ public:
     [[nodiscard]] TinyStrings *flattened(const std::vector<std::string>& collapse) const;
     [[nodiscard]] TinyStrings *subbed(long long start, long long end) const;
     [[nodiscard]] std::vector<std::size_t> sizes() const;
+    void append(const TinyStrings &other);
     std::vector<TinyString> &get_data();
     AlphabetSimple &get_alphabet();
 
@@ -88,6 +89,16 @@ inline std::vector<std::size_t> TinyStrings::sizes() const {
         return s.size();
     });
     return ret;
+}
+
+inline void TinyStrings::append(const TinyStrings &other) {
+    for (std::size_t i = 0; i < data_.size(); ++i) {
+        if (other.data_.size() == 1) {
+            data_.at(i).append(other.data_.at(0));
+        } else {
+            data_.at(i).append(other.data_.at(i));
+        }
+    }
 }
 
 inline std::vector<TinyString> &TinyStrings::get_data() {

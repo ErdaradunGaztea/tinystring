@@ -31,9 +31,9 @@ demo_strings |>
   tstr_flatten() |>
   tstr_unpack()
 
-tstr_c(
-  demo_strings, tstr_pack(c("aix"))
-)
+demo_strings |>
+  tstr_c(tstr_pack(c("aix"))) |>
+  tstr_unpack()
 
 demo_strings <- tstr_pack(c("aixpabsj", "bixxyi"))
 
