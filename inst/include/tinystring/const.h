@@ -1,3 +1,3 @@
 #pragma once
 
-constexpr uint8_t BYTE_WIDTH = 8u;
+constexpr std::uint8_t BYTE_WIDTH = 8u;
