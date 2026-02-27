@@ -26,6 +26,39 @@ public:
     [[nodiscard]] TinyString subbed(long long start, long long end) const;
     void append(const TinyString &other);
 
+    class const_iterator {
+        const TinyString* parent_;
+        std::size_t index_;
+
+    public:
+        using iterator_category = std::forward_iterator_tag;
+        using value_type = std::byte;
+        using difference_type = std::ptrdiff_t;
+
+        const_iterator(const TinyString* parent, const std::size_t index)
+            : parent_(parent), index_(index) {}
+
+        std::byte operator*() const;
+
+        const_iterator& operator++() {
+            ++index_;
+            return *this;
+        }
+
+        bool operator==(const const_iterator& other) const {
+            return index_ == other.index_;
+        }
+
+        bool operator!=(const const_iterator& other) const {
+            return !(*this == other);
+        }
+    };
+
+    const_iterator begin() const { return {this, 0}; }
+    const_iterator end() const { return {this, size_}; }
+    const_iterator cbegin() const { return {this, 0}; }
+    const_iterator cend() const { return {this, size_}; }
+
 private:
     [[nodiscard]] std::size_t translate_index(long long r_index) const;
 };
@@ -161,4 +194,22 @@ inline std::size_t TinyString::translate_index(const long long r_index) const {
         return std::max(size_signed + r_index, 0ll);
     }
     cpp11::stop("0 is not a valid index");
+}
+
+inline std::byte TinyString::const_iterator::operator*() const {
+    // TODO: Test, test a lot, as I'm not sure about this implementation
+    const std::size_t first_bit = parent_->alphabet_->get_width() * index_;
+    // This is the first bit _not_ to be included
+    //  (because it simplifies math a lot compared to having the last bit included)
+    const std::size_t end_bit = first_bit + parent_->alphabet_->get_width();
+    const uint8_t first_bit_loc = first_bit % BYTE_WIDTH;
+    const uint8_t end_bit_loc = end_bit % BYTE_WIDTH;
+    const std::size_t first_byte = first_bit / BYTE_WIDTH;
+
+    if (const std::size_t end_byte = end_bit / BYTE_WIDTH; end_byte > first_byte) {
+        return parent_->data_.at(first_byte) >> first_bit_loc |
+                    parent_->data_.at(end_byte) << (BYTE_WIDTH - end_bit_loc) >> (first_bit_loc - end_bit_loc);
+    }
+
+    return parent_->data_.at(first_byte) << (BYTE_WIDTH - end_bit_loc) >> (BYTE_WIDTH - end_bit_loc + first_bit_loc);
 }

@@ -14,6 +14,11 @@ add_library(tinystring STATIC
         inst/include/tinystring/TinyString.h
         inst/include/tinystring/const.h
         inst/include/tinystring_types.h
+        inst/include/tinystring/regex/State.h
+        inst/include/tinystring/regex/Rule.h
+        inst/include/tinystring/regex/epsilon.h
+        inst/include/tinystring/regex/Graph.h
+        inst/include/tinystring/regex/matchers.h
 )
 set_target_properties(tinystring PROPERTIES LINKER_LANGUAGE CXX)
 
