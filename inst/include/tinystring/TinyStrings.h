@@ -21,6 +21,7 @@ public:
     [[nodiscard]] std::vector<std::string> unpack() const;
     [[nodiscard]] TinyStrings *flattened(const std::vector<std::string>& collapse) const;
     [[nodiscard]] TinyStrings *subbed(R_xlen_t start, R_xlen_t end) const;
+    [[nodiscard]] std::size_t size() const;
     [[nodiscard]] std::vector<std::size_t> sizes() const;
     void append(const TinyStrings &other);
     std::vector<TinyString> &get_data();
@@ -80,6 +81,10 @@ inline TinyStrings* TinyStrings::subbed(const R_xlen_t start, const R_xlen_t end
         return s.subbed(start, end);
     });
     return new TinyStrings(subbed, alphabet_);
+}
+
+inline std::size_t TinyStrings::size() const {
+    return data_.size();
 }
 
 inline std::vector<std::size_t> TinyStrings::sizes() const {

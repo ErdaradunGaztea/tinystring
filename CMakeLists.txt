@@ -31,5 +31,6 @@ add_executable(tinystring-test
         src/r_flatten.cpp
         src/r_sub.cpp
         src/r_alphabet.cpp
-        src/r_c.cpp)
+        src/r_c.cpp
+        src/r_match.cpp)
 target_link_libraries(tinystring-test tinystring)

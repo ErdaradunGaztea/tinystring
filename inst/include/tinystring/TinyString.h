@@ -54,10 +54,10 @@ public:
         }
     };
 
-    const_iterator begin() const { return {this, 0}; }
-    const_iterator end() const { return {this, size_}; }
-    const_iterator cbegin() const { return {this, 0}; }
-    const_iterator cend() const { return {this, size_}; }
+    [[nodiscard]] const_iterator begin() const { return {this, 0}; }
+    [[nodiscard]] const_iterator end() const { return {this, size_}; }
+    [[nodiscard]] const_iterator cbegin() const { return {this, 0}; }
+    [[nodiscard]] const_iterator cend() const { return {this, size_}; }
 
 private:
     [[nodiscard]] std::size_t translate_index(R_xlen_t r_index) const;

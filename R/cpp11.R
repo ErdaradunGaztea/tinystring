@@ -24,6 +24,10 @@ rcpp_set_length <- function(x_ptr, size) {
   .Call(`_tinystring_rcpp_set_length`, x_ptr, size)
 }
 
+rcpp_match <- function(x_ptr) {
+  .Call(`_tinystring_rcpp_match`, x_ptr)
+}
+
 rcpp_pack <- function(x, alphabet) {
   .Call(`_tinystring_rcpp_pack`, x, alphabet)
 }

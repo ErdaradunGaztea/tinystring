@@ -54,3 +54,7 @@ c("pamjjs", "sbpaa", "suyvpsnna") |>
   tstr_pack() |>
   tstr_sub(start = -4, end = -2) |>
   tstr_unpack()
+
+c("aix", "abab", "") |>
+  tstr_pack(alphabet = letters) |>
+  tinystring:::rcpp_match()
