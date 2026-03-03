@@ -23,7 +23,7 @@ public:
     [[nodiscard]] std::string unpack() const;
     [[nodiscard]] std::size_t size() const;
     [[nodiscard]] std::vector<std::byte> shifted(uint8_t offset) const;
-    [[nodiscard]] TinyString subbed(long long start, long long end) const;
+    [[nodiscard]] TinyString subbed(R_xlen_t start, R_xlen_t end) const;
     void append(const TinyString &other);
 
     class const_iterator {
@@ -60,7 +60,7 @@ public:
     const_iterator cend() const { return {this, size_}; }
 
 private:
-    [[nodiscard]] std::size_t translate_index(long long r_index) const;
+    [[nodiscard]] std::size_t translate_index(R_xlen_t r_index) const;
 };
 
 
@@ -112,9 +112,9 @@ inline std::vector<std::byte> TinyString::shifted(const uint8_t offset) const {
     return out;
 }
 
-inline TinyString TinyString::subbed(const long long start, const long long end) const {
-    if (start > static_cast<long long>(size_) ||
-        -end > static_cast<long long>(size_) ||
+inline TinyString TinyString::subbed(const R_xlen_t start, const R_xlen_t end) const {
+    if (start > static_cast<R_xlen_t>(size_) ||
+        -end > static_cast<R_xlen_t>(size_) ||
         (end > 0ll && start > end) ||
         (start < 0ll && start > end)) {
         return {"", *alphabet_};
@@ -184,8 +184,8 @@ inline void TinyString::append(const TinyString &other) {
     size_ += other.size_;
 }
 
-inline std::size_t TinyString::translate_index(const long long r_index) const {
-    const auto size_signed = static_cast<long long>(size_);
+inline std::size_t TinyString::translate_index(const R_xlen_t r_index) const {
+    const auto size_signed = static_cast<R_xlen_t>(size_);
 
     if (r_index > 0) {
         return std::min(r_index - 1, size_signed - 1);

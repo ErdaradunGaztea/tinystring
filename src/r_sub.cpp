@@ -7,6 +7,7 @@
 
 [[cpp11::register]]
 TinyStrings_ptr rcpp_sub(const TinyStrings_ptr& x_ptr, const long long start, const long long end) {
+    // TODO: Replace long long with R_xlen_t, maybe?
     assert_not_null_pointer(x_ptr);
 
     TinyStrings *subbed = x_ptr->subbed(start, end);
